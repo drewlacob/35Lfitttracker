@@ -7,8 +7,11 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 Make sure to run
 
 ### `npm install @material-ui/core`
+
 ### `npm install @mui/materials
+
 ### `npm install @material-ui/icons`
+
 ### 'npm install @mui/material @emotion/react @emotion/styled'
 
 and 
