@@ -21,12 +21,14 @@ function LoginPage() {
                             floatingLabelText="Email"
                             type="email"
                             variant="filled"
+                            label="email"
                         />
                         <TextField
-                            hintText="Email"
-                            floatingLabelText="Email"
-                            type="email"
+                            hintText="Password"
+                            floatingLabelText="Password"
+                            type="password"
                             variant="filled"
+                            label="password"
                         /> 
                     </Stack>
                     <h2><span> {''} </span></h2>
@@ -44,7 +46,7 @@ function LoginPage() {
                     LOGIN
                     </Button>
                 </h2>
-                <span> {space} </span>
+                
                 <a
                     className="App-link"
                     href="https://reactjs.org"

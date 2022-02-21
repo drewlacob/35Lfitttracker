@@ -8,15 +8,23 @@ Make sure to run
 
 ### `npm install @material-ui/core`
 
-### `npm install @mui/materials
+Install material-ui/core
+
+### `npm install @mui/materials'
+
+Install mui/materials
 
 ### `npm install @material-ui/icons`
 
+Install material-ui/icons
+
 ### 'npm install @mui/material @emotion/react @emotion/styled'
 
-and 
+Install mui/material and dependency packages
 
-### 'npm install react-router-dom
+### 'npm install react-router-dom'
+
+Install react router
 
 ## Available Scripts
 
