@@ -1,11 +1,8 @@
 import React from 'react'
 import InputIcon from '@material-ui/icons/ExitToApp';
-import { Fragment } from "react";
 import TextField from '@material-ui/core/TextField';
 import Stack from '@mui/material/Stack';
 import Button from '@material-ui/core/Button';
-
-const space = <Fragment>&nbsp;&nbsp;&nbsp;&nbsp;</Fragment>
 
 function LoginPage() {
     return (
@@ -36,10 +33,11 @@ function LoginPage() {
                         startIcon = {<InputIcon/>}
                         style={{
                             borderRadius: 35,
-                            backgroundColor: "#1bd12e",
+                            background: 'linear-gradient(45deg, #5bab65, #07fa28)',
                             padding: "18px 36px",
                             fontSize: "18px",
                             color: "white",
+                            padding: "10px 120px"
                             }}
                         variant="contained"
                     >
@@ -54,10 +52,11 @@ function LoginPage() {
                     rel="noopener noreferrer"
                     style={{
                         borderRadius: 35,
-                        backgroundColor: "#f44336",
+                        background: 'linear-gradient(45deg, #FE6B8B, #FF8E53)',
                         padding: "18px 36px",
                         fontSize: "18px",
-                        color: "white"
+                        color: "white",
+                        padding: "10px 60px"
                         }}
                 >
                 New member? Create account
