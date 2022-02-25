@@ -1,4 +1,4 @@
-import { firebaseConfig, getUserData } from './database.js'
+import { firebaseConfig, getUserData } from './database.mjs'
 import { initializeApp } from 'firebase/app';
 import { getDatabase, ref, set, onValue, update } from "firebase/database";
 import http from 'http';
@@ -8,8 +8,9 @@ import util from 'util';
 //var http = require('http');
 //var url = require('url');
 //var util = require('util');
-
 //var db_info = require('./database');
+
+//Initialize the database reference
 var app = initializeApp(firebaseConfig);
 var db = getDatabase(app);
 
@@ -36,6 +37,7 @@ var server = http.createServer(function (request, response) {
 
 });
 
+//Listen to the port localhost:8888
 server.listen(8888, function() {
     console.log('start server');
 });
