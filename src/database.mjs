@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getDatabase, ref, set, onValue, update } from "firebase/database";
+import { getDatabase, ref, set, onValue, update, get, child } from "firebase/database";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -26,13 +26,30 @@ function addFitRecord(db, userId, exer, num, date) {
   return update(ref(db), updates);
 }
 
-//Output the user's data into the console
-async function getUserData(db, userId) {
-  const userDataRef = ref(db, 'users/' + userId);
-  onValue(userDataRef, (snapshot) => {
-    const data = snapshot.val();
-    console.log(data);
+var result;
+
+//Return the user's name and email
+function getUserData(db, userId) {
+  hist = null;
+  const userRef = ref(db, 'users/' + userId);
+  onValue(userRef, (snapshot) => {
+    //console.log(snapshot.val());
+    result = snapshot.val();
   });
+  return result;
+}
+
+var hist;
+
+//Return the history of the given date
+function getHistory(db, userId, date) {
+  hist = null;
+  const histRef = ref(db, 'users/' + userId + '/history/' + date);
+  onValue(histRef, (snapshot) => {
+    //console.log(snapshot.val());
+    hist = snapshot.val();
+  });
+  return hist;
 }
 
 //module.exports = { firebaseConfig, writeUserData, addFitRecord, getUserData };
@@ -41,4 +58,4 @@ async function getUserData(db, userId) {
 //exports.addFitRecord = addFitRecord;
 //exports.getUserData = getUserData;
 
-export { firebaseConfig, writeUserData, addFitRecord, getUserData };
+export { firebaseConfig, writeUserData, addFitRecord, getUserData, getHistory };
