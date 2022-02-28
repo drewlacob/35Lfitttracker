@@ -2,6 +2,30 @@
 
 35L Project
 
+## This project uses material-ui, mui, and react router
+
+Make sure to run
+
+### `npm install @material-ui/core`
+
+Install material-ui/core
+
+### `npm install @mui/materials`
+
+Install mui/materials
+
+### `npm install @material-ui/icons`
+
+Install material-ui/icons
+
+### `npm install @mui/material @emotion/react @emotion/styled`
+
+Install mui/material and dependency packages
+
+### `npm install react-router-dom`
+
+Install react router
+
 ## Available Scripts
 
 In the project directory, you can run:
