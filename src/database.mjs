@@ -30,7 +30,7 @@ var result;
 
 //Return the user's name and email
 function getUserData(db, userId) {
-  hist = null;
+  result = null;
   const userRef = ref(db, 'users/' + userId);
   onValue(userRef, (snapshot) => {
     //console.log(snapshot.val());

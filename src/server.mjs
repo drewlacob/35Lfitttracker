@@ -34,27 +34,35 @@ var server = http.createServer( function (request, response) {
     else if (pathname == '/info') {
       var data;
       var chunk = '';
-      data = getUserData(db, params.user);
-      if (data != null)
-        chunk = data.username + ' ' + data.email + '\n';
-      else
-        chunk = 'Error\n';
-      response.write(chunk);
-      response.end();
+      const userRef = ref(db, 'users/' + params.user);
+      onValue(userRef, (snapshot) => {
+        //console.log(snapshot.val());
+        data = snapshot.val();
+        if (data != null)
+          chunk = data.username + ' ' + data.email + '\n';
+        else
+          chunk = 'Error\n';
+        response.write(chunk);
+        response.end();
+      });
     }
     else if (pathname == '/history') {
       var data;
       var chunk = "";
-      data = getHistory(db, params.user, params.date);
-      if (data != null) {
-        for (var key in data) 
-          chunk = chunk + key + ':' + data[key] + '\n';
-      }
-      else {
-        chunk = 'Error\n';
-      }
-      response.write(chunk);
-      response.end();
+      const histRef = ref(db, 'users/' + params.user + '/history/' + params.date);
+      onValue(histRef, (snapshot) => {
+        //console.log(snapshot.val());
+        data = snapshot.val();
+        if (data != null) {
+          for (var key in data) 
+            chunk = chunk + key + ':' + data[key] + '\n';
+        }
+        else {
+          chunk = 'Error\n';
+        }
+        response.write(chunk);
+        response.end();
+      });
     }
     else if (pathname == '/addUser') {
       var uid = params.user;
