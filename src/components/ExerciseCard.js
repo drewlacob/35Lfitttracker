@@ -1,119 +1,82 @@
 import * as React from 'react';
-import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
-import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
-import Collapse from '@mui/material/Collapse';
-import Avatar from '@mui/material/Avatar';
-import IconButton from '@mui/material/IconButton';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { red } from '@mui/material/colors';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import TextField from '@mui/material/TextField';
+import DeleteIcon from '@mui/icons-material/Delete';
+import IconButton from '@mui/material/IconButton'
+import CardHeader from '@mui/material/CardHeader'
+import Box from '@mui/material/Box'
+import Input from '@material-ui/core/Input';
 
-const ExpandMore = styled((props) => {
-  const { expand, ...other } = props;
-  return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-  transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-  marginLeft: 'auto',
-  transition: theme.transitions.create('transform', {
-    duration: theme.transitions.duration.shortest,
-  }),
-}));
+const ExerciseCard = props => {
+  const { imageUrl, title, desc, sets, reps, weight } = props;
 
-export default function ExerciseCard() {
-  const [expanded, setExpanded] = React.useState(false);
-
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
+  const handleChange = (event) => {
+    sets = event.target.value;
   };
 
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card style = {{padding:"10px", margin:"20px", width: "600px", height: "530px"}}>
       <CardHeader
-        avatar={
-          <Avatar sx={{ bgcolor: red[500] }} aria-label="exercise">
-            E
-          </Avatar>
-        }
         action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
+          <IconButton aria-label="delete">
+            <DeleteIcon/>
           </IconButton>
         }
-        title="Shrimp and Chorizo Paella"
-        subheader="September 14, 2016"
+        title={title}
       />
-      <CardMedia
-        component="img"
-        height="194"
-        image="/static/images/cards/paella.jpg"
-        alt="img"
-      />
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+      >
+      <CardMedia style={{ height: "300px", width: '55%'}} 
+                 image={imageUrl}/>
+      </Box>
       <CardContent>
-        <Typography variant="body2" color="text.secondary">
-          body 2
+        <Typography variant="body2" component="p">
+          {desc}
         </Typography>
       </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
-        <ExpandMore
-          expand={expanded}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </ExpandMore>
+      <CardActions>
+      <TextField
+        id="sets"
+        label="Sets"
+        InputLabelProps={{ shrink: true }}
+        defaultValue={sets}
+        onChange={handleChange}
+        type="number"
+      />
+        <TextField
+        id="reps"
+        label="Reps"
+        InputLabelProps={{ shrink: true }}
+        defaultValue={reps}
+        onChange={handleChange}
+        type="number"
+      />
+        <TextField
+        id="weight"
+        label="Weight"
+        InputLabelProps={{ shrink: true }}
+        defaultValue={weight}
+        onChange={handleChange}
+        type="number"
+      />
       </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          <Typography paragraph>Method:</Typography>
-          <Typography paragraph>
-            Heat 1/2 cup of the broth in a pot until simmering, add saffron and set
-            aside for 10 minutes.
-          </Typography>
-          <Typography paragraph>
-            Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over
-            medium-high heat. Add chicken, shrimp and chorizo, and cook, stirring
-            occasionally until lightly browned, 6 to 8 minutes. Transfer shrimp to a
-            large plate and set aside, leaving chicken and chorizo in the pan. Add
-            pimentón, bay leaves, garlic, tomatoes, onion, salt and pepper, and cook,
-            stirring often until thickened and fragrant, about 10 minutes. Add
-            saffron broth and remaining 4 1/2 cups chicken broth; bring to a boil.
-          </Typography>
-          <Typography paragraph>
-            Add rice and stir very gently to distribute. Top with artichokes and
-            peppers, and cook without stirring, until most of the liquid is absorbed,
-            15 to 18 minutes. Reduce heat to medium-low, add reserved shrimp and
-            mussels, tucking them down into the rice, and cook again without
-            stirring, until mussels have opened and rice is just tender, 5 to 7
-            minutes more. (Discard any mussels that don’t open.)
-          </Typography>
-          <Typography>
-            Set aside off of the heat to let rest for 10 minutes, and then serve.
-          </Typography>
-        </CardContent>
-      </Collapse>
     </Card>
   );
-}
-/*import React from 'react'
+};
 
-function ExerciseCard() {
-    return (
-        <h1>exercise card</h1>
-    )
-}
+  ExerciseCard.defaultProps = { imageUrl: "na",
+    title: "Exercise",
+    desc: "Description not found",
+    sets: 0,
+    reps: 0,
+    weight: 0 }
 
-export default ExerciseCard*/
+export default ExerciseCard;
