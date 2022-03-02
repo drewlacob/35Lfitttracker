@@ -20,10 +20,15 @@ function writeUserData(db, userId, name, email) {
 }
 
 //Add a new fitness record to the user with userId
-function addFitRecord(db, userId, exer, num, date) {
+function addFitRecord(db, userId, wname, date, exer, s, r, w) {
+  const exerData = {
+    sets: s,
+    rounds: r,
+    weight: w
+  }
   const updates = {};
-  updates['users/' + userId + '/history/' + date + '/' + exer] = num;
-  return update(ref(db), updates);
+  updates['users/' + userId + '/history/' + date + '/' + wname + '/' + exer] = exerData;
+  return update(ref(db), updates)
 }
 
 var result;

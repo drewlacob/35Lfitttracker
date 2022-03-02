@@ -49,13 +49,15 @@ var server = http.createServer( function (request, response) {
     else if (pathname == '/history') {
       var data;
       var chunk = "";
-      const histRef = ref(db, 'users/' + params.user + '/history/' + params.date);
+      const histRef = ref(db, 'users/' + params.user + '/history/' + params.date + '/' + params.workname);
       onValue(histRef, (snapshot) => {
         //console.log(snapshot.val());
         data = snapshot.val();
         if (data != null) {
-          for (var key in data) 
-            chunk = chunk + key + ':' + data[key] + '\n';
+          for (var key in data) {
+            var temp = key + ':' + data[key].rounds + ',' + data[key].sets + ',' + data[key].weight + '\n';
+            chunk = chunk + temp;
+          }
         }
         else {
           chunk = 'Error\n';
@@ -74,9 +76,9 @@ var server = http.createServer( function (request, response) {
     else if (pathname == '/addRecord') {
       var uid = params.user;
       var date = params.date;
-      var email = params.email;
-      response.end('Try to add record');
-
+      var wname = params.workname;
+      addFitRecord(db, uid, wname, date, params.exer, params.s, params.r, params.w);
+      response.end('Finished');
     }
 
 });
