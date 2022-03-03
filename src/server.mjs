@@ -55,7 +55,7 @@ var server = http.createServer( function (request, response) {
         data = snapshot.val();
         if (data != null) {
           for (var key in data) {
-            var temp = key + ':' + data[key].rounds + ',' + data[key].sets + ',' + data[key].weight + '\n';
+            var temp = key + ' ' + data[key].rounds + ' ' + data[key].sets + ' ' + data[key].weight + '\n';
             chunk = chunk + temp;
           }
         }
@@ -79,6 +79,28 @@ var server = http.createServer( function (request, response) {
       var wname = params.workname;
       addFitRecord(db, uid, wname, date, params.exer, params.s, params.r, params.w);
       response.end('Finished');
+    }
+    else if (pathname == '/allHist'){
+      var uid = params.user;
+      var chunk = '';
+      const histRef = ref(db, 'users/' + params.user + '/history');
+      onValue(histRef, (snapshot) => {
+        //console.log(snapshot.val());
+        data = snapshot.val();
+        if (data != null) {
+          for (var day in data) {
+            var temp = day;
+            for (var wname in data[day])
+              temp = temp + ' ' + wname;
+            chunk = chunk + temp + '\n';
+          }
+        }
+        else {
+          chunk = 'Error\n';
+        }
+        response.write(chunk);
+        response.end();
+      });
     }
 
 });
