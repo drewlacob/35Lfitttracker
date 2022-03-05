@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import './App.css';
 import LoginPage from './pages/LoginPage.js'
 import WorkoutPage from './pages/WorkoutPage.js';
+import HistoryPage from './pages/HistoryPage.js'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 //import { Switch, Link, Redirect } from 'react-router-dom';
 class App extends Component {
@@ -9,7 +10,7 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <LoginPage></LoginPage>
+          <HistoryPage></HistoryPage>
           <Router>
             <Routes>
               <Route path="/login" element={<LoginPage />} />
