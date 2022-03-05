@@ -1,16 +1,14 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Grid from '@mui/material/Grid'
 import ExerciseCard from "./ExerciseCard";
 
 const Content = () => {
   //{ imageUrl, title, desc, sets, reps, weight}
   const listOfExercises = ["pullup.png", "Pullup", "Description", "0", "5", "10"]
-
-  //wip not used for now
-  const getExerciseCard = ExerciseCard => {
+  const getExerciseCard = exerciseCardObject => {
     return (
       <Grid item xs={12} sm={4}>
-        <ExerciseCard></ExerciseCard>
+        <ExerciseCard {...exerciseCardObject} />
       </Grid>
     );
   };

@@ -11,6 +11,8 @@ import IconButton from '@mui/material/IconButton'
 import CardHeader from '@mui/material/CardHeader'
 import Box from '@mui/material/Box'
 import Input from '@material-ui/core/Input';
+import ReactDOM from 'react-dom'
+import WorkoutPage from '../pages/WorkoutPage'
 
 const ExerciseCard = props => {
   const { imageUrl, title, desc, sets, reps, weight } = props;
@@ -24,7 +26,7 @@ const ExerciseCard = props => {
       <CardHeader
         action={
           <IconButton aria-label="delete">
-            <DeleteIcon/>
+            <DeleteIcon  onClick={() => { WorkoutPage.handleDelete(props.title); }}/>
           </IconButton>
         }
         title={title}

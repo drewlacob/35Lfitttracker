@@ -11,7 +11,7 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <Content></Content>
+          <WorkoutPage title = "NEW WORKOUT"></WorkoutPage>
           <Router>
             <Routes>
               <Route path="/login" element={<LoginPage />} />
