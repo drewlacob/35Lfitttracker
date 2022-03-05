@@ -33,6 +33,10 @@ export default function HistoryPage() {
   const [secondary, setSecondary] = React.useState(true);
 
   return (
+        <React.Fragment>
+            <div>
+                <h1>Hello</h1>
+            </div>
             <List dense={dense} sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.blue' }}>
               {generate(
                 <ListItem
@@ -49,6 +53,6 @@ export default function HistoryPage() {
                 </ListItem>,
               )}
             </List>
-          
+        </React.Fragment>
   );
 }
