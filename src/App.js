@@ -10,11 +10,11 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <HistoryPage></HistoryPage>
           <Router>
             <Routes>
               <Route path="/login" element={<LoginPage />} />
               <Route path="/workouts" element={<WorkoutPage />} />
+              <Route path="/history" element={<HistoryPage />} />
             </Routes>
           </Router>
         </header> 
