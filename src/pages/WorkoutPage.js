@@ -3,6 +3,9 @@ import ExerciseCard from '../components/ExerciseCard.js'
 import Content from '../components/Content.js'
 import Grid from '@mui/material/Grid'
 import Button from '@mui/material/Button'
+import Navbar from '../components/NavBar.js'
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from "@mui/icons-material/Delete";
 
 function WorkoutPage(props) {
     const { title, date, count, userID } = props;
@@ -19,7 +22,12 @@ function WorkoutPage(props) {
 
     const getExerciseCard = exerciseCardObject => {
         return (
+            <div>
             <ExerciseCard {...exerciseCardObject} />
+            <IconButton>
+              <DeleteIcon onClick={() => handleDelete()}/>
+            </IconButton>
+            </div>
         );
       };
 
@@ -27,9 +35,16 @@ function WorkoutPage(props) {
         //todo implement saving to db
     };
 
-    function handleDelete(){
-        setExerciseCount(exerciseCount-1);
-        //todo remove from list
+    function handleDelete(ind) {
+      if (exerciseArray.length == 1)
+      {
+        alert("You must keep at least one exercise!");
+        return;
+      }
+      setExerciseCount(exerciseCount-1);
+      exerciseArray.splice(ind, 1);
+      setExerciseArray(exerciseArray);
+      //todo remove from list
     };
 
     function updateExercise(){
@@ -45,9 +60,9 @@ function WorkoutPage(props) {
     };
 
     return (
-        <Grid container direction="column">
+      <Grid container direction="column">
         <Grid item>
-          <h1>Put Nav bar here</h1>
+          <Navbar></Navbar>
           <h1> 
             <Button
             style = {{color: "white",
@@ -61,12 +76,26 @@ function WorkoutPage(props) {
             style = {{color: "white",
                      background:"green",
                     }}>
-            Add Exercise Current count: {exerciseCount}
+            Add Exercise (current count: {exerciseCount} )
             </Button></h1>
         </Grid>
         <Grid item container>
           <Grid item xs={false} sm={2} />
-          <Grid item xs={12} sm={8}>
+            <Grid item xs={12} sm={8}>
+              <Grid container justifyContent="center" >
+                {exerciseArray.map(exerciseCardObject => getExerciseCard(exerciseCardObject))}
+              </Grid>
+          </Grid>
+          <Grid item xs={false} sm={2} />
+        </Grid>
+      </Grid>
+    )
+}
+
+/*
+<Grid item container>
+          <Grid item xs={false} sm={2} />
+            <Grid item xs={12} sm={8}>
               <Grid container justifyContent="center" >
                 {exerciseArray.map(exerciseCardObject => getExerciseCard(exerciseCardObject))}
               </Grid>
@@ -74,9 +103,7 @@ function WorkoutPage(props) {
           </Grid>
           <Grid item xs={false} sm={2} />
         </Grid>
-      </Grid>
-    )
-}
+*/
 
 WorkoutPage.defaultProps = { title: "New Workout" }
 export default WorkoutPage
