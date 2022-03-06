@@ -19,6 +19,8 @@ var server = http.createServer( function (request, response) {
     //response.end('Hello World\n');
     //console.log(request.url);
 
+    response.setHeader("Access-Control-Allow-Origin", "*");
+
     var req = url.parse(request.url, true)
     var pathname = req.pathname;
     var params = req.query;
