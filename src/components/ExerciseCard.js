@@ -24,11 +24,6 @@ const ExerciseCard = props => {
   return (
     <Card style = {{padding:"10px", margin:"20px", width: "600px", height: "530px"}}>
       <CardHeader
-        action={
-          <IconButton aria-label="delete">
-            <DeleteIcon  onClick={() => { WorkoutPage.handleDelete(props.title); }}/>
-          </IconButton>
-        }
         title={title}
       />
       <Box

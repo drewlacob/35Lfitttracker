@@ -14,18 +14,16 @@ function WorkoutPage(props) {
         {title: 'Situps', sets: '4', reps: '124', weight: '20', id: '2'},
       ];
 
-    
     const [exerciseArray, setExerciseArray] = useState(initialArray);
     const [exerciseCount, setExerciseCount] = useState(2);
     //imageUrl, title, desc, sets, reps, weight
-
 
     const getExerciseCard = exerciseCardObject => {
         return (
             <div>
             <ExerciseCard {...exerciseCardObject} />
             <IconButton>
-              <DeleteIcon onClick={() => handleDelete()}/>
+              <DeleteIcon onClick={() => handleDelete(exerciseCardObject.id-1)}/>
             </IconButton>
             </div>
         );
@@ -35,14 +33,14 @@ function WorkoutPage(props) {
         //todo implement saving to db
     };
 
-    function handleDelete(ind) {
-      if (exerciseArray.length == 1)
+    function handleDelete(id) {
+      if (exerciseArray.length === 1)
       {
         alert("You must keep at least one exercise!");
         return;
       }
       setExerciseCount(exerciseCount-1);
-      exerciseArray.splice(ind, 1);
+      exerciseArray.splice(id, 1);
       setExerciseArray(exerciseArray);
       //todo remove from list
     };
@@ -56,13 +54,13 @@ function WorkoutPage(props) {
         let data = {title: 'Pullup', sets: '3', reps: '124', weight: '20', id: {exerciseCount}};
         exerciseArray.push(data);
         setExerciseArray(exerciseArray);
-        alert(exerciseArray.length);
+        //alert(exerciseArray.length);
     };
 
     return (
       <Grid container direction="column">
         <Grid item>
-          <Navbar></Navbar>
+          <h1>NavBar</h1>
           <h1> 
             <Button
             style = {{color: "white",
