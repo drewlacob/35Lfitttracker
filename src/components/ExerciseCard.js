@@ -14,15 +14,47 @@ import Input from '@material-ui/core/Input';
 import ReactDOM from 'react-dom'
 import WorkoutPage from '../pages/WorkoutPage'
 
-const ExerciseCard = props => {
-  const { imageUrl, title, desc, sets, reps, weight } = props;
+window.ids = [];
+window.data = [[]];
 
-  const handleChange = (event) => {
-    sets = event.target.value;
+var state = 0;
+
+const ExerciseCard = props => {
+  const { imageUrl, title, desc, sets, reps, weight, id } = props;
+
+  var add = true;
+  for (let i = 0; i < window.ids.length; i++) {
+    if (window.ids[i] == props.id)
+      add = false;
+  }
+  if (add) {
+     window.ids.push(props.id);
+     window.data[props.id] = [props.title, 0, 0, 0]; // initialize the sets, reps, and weight to 0's
+  }
+
+  function handleChange(event, field)  {
+    switch(field) {
+      case 0:
+        //console.log(props.sets);
+        //console.log("props id");
+        //console.log(props.id);
+        window.data[props.id][1] = event.target.value;
+        break;
+      case 1:
+        window.reps = event.target.value;
+        window.data[props.id][2] = event.target.value;
+        break;
+      case 2:
+        window.weights = event.target.value;
+        window.data[props.id][3] = event.target.value;
+        break;
+      default:
+        break;
+    }
   };
 
   return (
-    <Card style = {{padding:"10px", margin:"20px", width: "600px", height: "530px"}}>
+    <Card style = {{padding:"40px", margin:"20px", width: "600px", height: "530px"}}>
       <CardHeader
         title={title}
       />
@@ -45,7 +77,7 @@ const ExerciseCard = props => {
         label="Sets"
         InputLabelProps={{ shrink: true }}
         defaultValue={sets}
-        onChange={handleChange}
+        onChange={(e) => handleChange(e, 0)}
         type="number"
       />
         <TextField
@@ -53,7 +85,7 @@ const ExerciseCard = props => {
         label="Reps"
         InputLabelProps={{ shrink: true }}
         defaultValue={reps}
-        onChange={handleChange}
+        onChange={(e) => handleChange(e, 1)}
         type="number"
       />
         <TextField
@@ -61,7 +93,7 @@ const ExerciseCard = props => {
         label="Weight"
         InputLabelProps={{ shrink: true }}
         defaultValue={weight}
-        onChange={handleChange}
+        onChange={(e) => handleChange(e, 2)}
         type="number"
       />
       </CardActions>
@@ -74,6 +106,7 @@ const ExerciseCard = props => {
     desc: "Description not found",
     sets: 0,
     reps: 0,
-    weight: 0 }
+    weight: 0 
+  }
 
 export default ExerciseCard;
