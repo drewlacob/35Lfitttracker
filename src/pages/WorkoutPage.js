@@ -6,24 +6,40 @@ import Button from '@mui/material/Button'
 import Navbar from '../components/NavBar.js'
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from "@mui/icons-material/Delete";
+import constants from '../assets/constants.js'
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 
 function WorkoutPage(props) {
     const { title, date, count, userID } = props;
     let initialArray = [
-        {title: 'Pushup', sets: '5', reps: '123', weight: '10', id: '1'},
-        {title: 'Situps', sets: '4', reps: '124', weight: '20', id: '2'},
+        //{title: 'Pushup', imageUrl:"https://miro.medium.com/max/645/1*WZmDgcJO40Va5mVgdfbz7g@2x.jpeg", sets: '5', reps: '123', weight: '10', id: '0'}
       ];
-
+    let exerciseInfo = constants;
     const [exerciseArray, setExerciseArray] = useState(initialArray);
-    const [exerciseCount, setExerciseCount] = useState(2);
-    //imageUrl, title, desc, sets, reps, weight
+    const [exerciseCount, setExerciseCount] = useState(0);
+
+    //dropdown button
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
+    const handleMenuClick = (event) => {
+      setAnchorEl(event.currentTarget);
+    };
+    const handleMenuClose = () => {
+      setAnchorEl(null);
+    };
+    function handleMenuOptionClick(exerciseType){
+        setAnchorEl(null);
+        addExercise(exerciseType);
+    };
+    //
 
     const getExerciseCard = exerciseCardObject => {
         return (
             <div>
             <ExerciseCard {...exerciseCardObject} />
             <IconButton>
-              <DeleteIcon onClick={() => handleDelete(exerciseCardObject.id-1)}/>
+              <DeleteIcon onClick={() => handleDelete(exerciseCardObject.id)}/>
             </IconButton>
             </div>
         );
@@ -34,13 +50,14 @@ function WorkoutPage(props) {
     };
 
     function handleDelete(id) {
-      if (exerciseArray.length === 1)
+      /*if (exerciseArray.length === 1)
       {
         alert("You must keep at least one exercise!");
         return;
-      }
+      }*/
       setExerciseCount(exerciseCount-1);
       exerciseArray.splice(id, 1);
+      //console.log(exerciseArray);
       setExerciseArray(exerciseArray);
       //todo remove from list
     };
@@ -49,9 +66,14 @@ function WorkoutPage(props) {
         //todo implement changing of exercise data to reflect in list
     }
 
-    const addExercise = () => {
+    function addExercise(exerciseType) {
         setExerciseCount(exerciseCount + 1);
-        let data = {title: 'Pullup', sets: '3', reps: '124', weight: '20', id: {exerciseCount}};
+        //var key = exerciseCount-1;
+        var result = exerciseInfo.find(obj => {
+            return obj.title === exerciseType;
+          })
+        let data = {title: exerciseType, sets: '0', reps: '0', weight: '0', id: {exerciseCount},
+                    desc: result.description, imageUrl: result.imageUrl};
         exerciseArray.push(data);
         setExerciseArray(exerciseArray);
         //alert(exerciseArray.length);
@@ -70,12 +92,34 @@ function WorkoutPage(props) {
             </Button><span> {'   '} </span>{props.title}
             <span> {'   '} </span>
             <Button
-            onClick={()=>addExercise()}
-            style = {{color: "white",
+        id="basic-button"
+        aria-controls={open ? 'basic-menu' : undefined}
+        aria-haspopup="true"
+        aria-expanded={open ? 'true' : undefined}
+        onClick={handleMenuClick}
+        style = {{color: "white",
                      background:"green",
-                    }}>
-            Add Exercise (current count: {exerciseCount} )
-            </Button></h1>
+                }}
+      >
+        Add Exercise
+      </Button>
+      <Menu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleMenuClose}
+        MenuListProps={{
+          'aria-labelledby': 'basic-button',
+        }}
+      >
+        <MenuItem onClick={()=>{handleMenuOptionClick("Pullup")}}>Pullup</MenuItem>
+        <MenuItem onClick={()=>{handleMenuOptionClick("Pushup")}}>Pushup</MenuItem>
+        <MenuItem onClick={()=>{handleMenuOptionClick("Situp")}}>Situp</MenuItem>
+        <MenuItem onClick={()=>{handleMenuOptionClick("Squat")}}>Squat</MenuItem>
+        <MenuItem onClick={()=>{handleMenuOptionClick("Bench Press")}}>Bench Press</MenuItem>
+        <MenuItem onClick={()=>{handleMenuOptionClick("Deadlift")}}>Deadlift</MenuItem>
+      </Menu>
+            </h1>
         </Grid>
         <Grid item container>
           <Grid item xs={false} sm={2} />
@@ -105,3 +149,11 @@ function WorkoutPage(props) {
 
 WorkoutPage.defaultProps = { title: "New Workout" }
 export default WorkoutPage
+
+/*<Button
+            onClick={()=>addExercise()}
+            style = {{color: "white",
+                     background:"green",
+                    }}>
+            Add Exercise (current count: {exerciseCount} )
+            </Button>*/
