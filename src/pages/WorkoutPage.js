@@ -39,7 +39,7 @@ function WorkoutPage(props) {
             <div>
             <ExerciseCard {...exerciseCardObject} />
             <IconButton>
-              <DeleteIcon onClick={() => handleDelete(exerciseCardObject.id)}/>
+              <DeleteIcon onClick={() => handleDelete(exerciseCount-1)}/>
             </IconButton>
             </div>
         );
@@ -50,14 +50,8 @@ function WorkoutPage(props) {
     };
 
     function handleDelete(id) {
-      /*if (exerciseArray.length === 1)
-      {
-        alert("You must keep at least one exercise!");
-        return;
-      }*/
       setExerciseCount(exerciseCount-1);
       exerciseArray.splice(id, 1);
-      //console.log(exerciseArray);
       setExerciseArray(exerciseArray);
       //todo remove from list
     };
