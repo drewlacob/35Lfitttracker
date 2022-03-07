@@ -9,6 +9,7 @@ import {
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import HistoryIcon from "@mui/icons-material/History";
+import WorkoutPage from '../pages/WorkoutPage'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -27,16 +28,16 @@ const useStyles = makeStyles((theme) => ({
   link: {
     color: "white",
     fontSize: "20px",
-    
     marginLeft: theme.spacing(2),
-    "&:hover": {
-      color: "yellow",
-    },
   },
 }));
 
 function Navbar() {
   const classes = useStyles();
+
+  function newWorkout() {
+    window.location.reload(false)
+  }
 
   return (
     <AppBar className={classes.navbar}>
@@ -45,11 +46,9 @@ function Navbar() {
           Name
         </Typography>
           <div className={classes.navlinks}>
-            <Link to="/workouts" className={classes.link}> {/* TODO: Only links to workouts, needs to reset state of workouts */}
-                <IconButton aria-label="app">
+            <IconButton aria-label="app" onClick={()=>newWorkout()}>
                   <AddIcon/>
-                </IconButton>
-            </Link>
+            </IconButton>
             <Link to="/history" className={classes.link}>
                 <IconButton aria-label="app">
                   <HistoryIcon/>
@@ -61,3 +60,10 @@ function Navbar() {
   );
 }
 export default Navbar;
+
+/*
+<Link to="/workouts" className={classes.link}> {}
+                <IconButton aria-label="app" onClick={()=>WorkoutPage.newWorkout()}>
+                  <AddIcon/>
+                </IconButton>
+            </Link> */
