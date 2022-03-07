@@ -40,19 +40,24 @@ function WorkoutPage(props) {
             <div>
             <ExerciseCard {...exerciseCardObject} />
             <IconButton>
-              <DeleteIcon onClick={() => handleDelete(exerciseCount-1)}/>
+              <DeleteIcon onClick={() => handleDelete(exerciseCardObject.id)}/>
             </IconButton>
             </div>
         );
       };
-
+      //handleDelete(exerciseCount-1)
     function save(){
+      console.log(window.data); // window.data contains all the data about all the exercises
+      alert(workoutTitle);
         //todo implement saving to db
     };
 
     function handleDelete(id) {
       setExerciseCount(exerciseCount-1);
       exerciseArray.splice(id, 1);
+      for (let i = id; i < exerciseArray.length; i++) { // adjust the id #s of the elements after the one deleted
+        exerciseArray[i].id -= 1;
+      }
       setExerciseArray(exerciseArray);
       //todo remove from list
     };
@@ -67,7 +72,7 @@ function WorkoutPage(props) {
         var result = exerciseInfo.find(obj => {
             return obj.title === exerciseType;
           })
-        let data = {title: exerciseType, sets: '0', reps: '0', weight: '0', id: {exerciseCount},
+        let data = {title: exerciseType, sets: '0', reps: '0', weight: '0', id: exerciseCount,
                     desc: result.description, imageUrl: result.imageUrl};
         exerciseArray.push(data);
         setExerciseArray(exerciseArray);
@@ -77,10 +82,11 @@ function WorkoutPage(props) {
     return (
       <Grid container direction="column">
         <Grid item>
+          <Navbar></Navbar>
           <h1>NavBar</h1>
           <h1> 
             <Button
-            onClick={()=>{alert(workoutTitle);}}
+            onClick={()=>{save()}}
             style = {{color: "white",
                      background:"green",
                     }}>
@@ -131,6 +137,7 @@ function WorkoutPage(props) {
         MenuListProps={{
           'aria-labelledby': 'basic-button',
         }}
+        direction="vertical"
       >
         <MenuItem onClick={()=>{handleMenuOptionClick("Pullup")}}>Pullup</MenuItem>
         <MenuItem onClick={()=>{handleMenuOptionClick("Pushup")}}>Pushup</MenuItem>
