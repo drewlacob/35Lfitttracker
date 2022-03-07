@@ -13,10 +13,10 @@ const firebaseConfig = {
 
 //Write new user data into the database
 function writeUserData(db, userId, name, email) {
-  set(ref(db, 'users/' + userId), {
-    username: name,
-    email: email,
-  });
+  const updates = {};
+  updates['users/' + userId + '/username'] = name;
+  updates['users/' + userId + '/email'] = email;
+  return update(ref(db), updates);
 }
 
 //Add a new fitness record to the user with userId
