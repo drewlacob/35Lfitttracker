@@ -18,7 +18,8 @@ export default [
         description:
         "The sit-up (or curl-up) is an abdominal endurance training exercise to strengthen, tighten and tone the abdominal muscles. It is similar to a crunch, but sit-ups have a fuller range of motion and condition additional muscles.",
         imageUrl:
-        "https://cdn.shopify.com/s/files/1/1075/8446/files/exercise-18.jpg?0"
+        "https://fitnessvolt.com/wp-content/uploads/2021/07/janda-sit-up-muscle-worked-750x476.jpg"
+        //"https://cdn.shopify.com/s/files/1/1075/8446/files/exercise-18.jpg?0"
       },
       {
         title: "Squat",

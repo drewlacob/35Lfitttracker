@@ -18,6 +18,7 @@ function WorkoutPage(props) {
     let exerciseInfo = constants;
     const [exerciseArray, setExerciseArray] = useState(initialArray);
     const [exerciseCount, setExerciseCount] = useState(0);
+    const [workoutTitle, setWorkoutTitle] = useState(props.title);
 
     //dropdown button
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -79,11 +80,36 @@ function WorkoutPage(props) {
           <h1>NavBar</h1>
           <h1> 
             <Button
+            onClick={()=>{alert(workoutTitle);}}
             style = {{color: "white",
                      background:"green",
                     }}>
             Save Workout 
-            </Button><span> {'   '} </span>{props.title}
+            </Button><span> {'   '} </span>
+            <label>
+      <input
+        id='title'
+        type='text'
+        defaultValue = {workoutTitle}
+        style = {{
+            height: "52px",
+            fontColor: "white",
+            padding: "0px 16px",
+            border: "none",
+            textAlign: "center",
+            borderRadius: "0px",
+            fontSize: "16px",
+            fontWeight: "400",
+            lineHeight: "normal",
+            backgroundColor: "green",
+            color: "white",
+            outline: "none",
+            boxShadow: "0px 4px 20px 0px transparent",
+            margin:"auto" 
+        }}
+        onChange={e => {setWorkoutTitle(e.target.value);}}
+      />
+    </label>
             <span> {'   '} </span>
             <Button
         id="basic-button"
