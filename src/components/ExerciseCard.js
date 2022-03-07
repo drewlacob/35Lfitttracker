@@ -17,8 +17,8 @@ import WorkoutPage from '../pages/WorkoutPage'
 const ExerciseCard = props => {
   const { imageUrl, title, desc, sets, reps, weight } = props;
 
-  const handleChange = (event) => {
-    sets = event.target.value;
+  const handleChangeSets = (event) => {
+    
   };
 
   return (
@@ -45,7 +45,7 @@ const ExerciseCard = props => {
         label="Sets"
         InputLabelProps={{ shrink: true }}
         defaultValue={sets}
-        onChange={handleChange}
+        onChange={e => {handleChangeSets(e.target.value);}}
         type="number"
       />
         <TextField
@@ -53,7 +53,7 @@ const ExerciseCard = props => {
         label="Reps"
         InputLabelProps={{ shrink: true }}
         defaultValue={reps}
-        onChange={handleChange}
+        onChange={handleChangeSets}
         type="number"
       />
         <TextField
@@ -61,7 +61,7 @@ const ExerciseCard = props => {
         label="Weight"
         InputLabelProps={{ shrink: true }}
         defaultValue={weight}
-        onChange={handleChange}
+        onChange={handleChangeSets}
         type="number"
       />
       </CardActions>

@@ -3,12 +3,13 @@ import ExerciseCard from '../components/ExerciseCard.js'
 import Content from '../components/Content.js'
 import Grid from '@mui/material/Grid'
 import Button from '@mui/material/Button'
-import Navbar from '../components/NavBar.js'
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from "@mui/icons-material/Delete";
 import constants from '../assets/constants.js'
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import Navbar from '../components/Navbar.js'
+import axios from 'axios'
 
 function WorkoutPage(props) {
     const { title, date, count, userID } = props;
@@ -40,19 +41,43 @@ function WorkoutPage(props) {
             <div>
             <ExerciseCard {...exerciseCardObject} />
             <IconButton>
-              <DeleteIcon onClick={() => handleDelete(exerciseCount-1)}/>
+              <DeleteIcon onClick={() => handleDelete(exerciseCardObject.id)}/>
             </IconButton>
             </div>
         );
       };
 
+    function load(){
+
+    }
+
     function save(){
-        //todo implement saving to db
+        for (var i = 0, l = exerciseArray.length; i < l; i++) {
+            var title = exerciseArray.title[i];
+            var sets = exerciseArray.sets[i];
+            var reps = exerciseArray.reps[i];
+            var weight = exerciseArray.weight[i];
+            axios.get("localhost:8888/addRecord?user=ID&date=DATE&workname=N&exer=E&s=S&r=R&w=W", {
+                params: {
+                user: 1234
+                    }
+                })
+                .then(function (response) {
+                console.log(response);
+                    })
+                .catch(function (error) {
+                 console.log(error);
+                })
+                .then(function () {
+            // always executed
+                });  
+        }
+
     };
 
     function handleDelete(id) {
+      exerciseArray.splice(id+1, 1);
       setExerciseCount(exerciseCount-1);
-      exerciseArray.splice(id, 1);
       setExerciseArray(exerciseArray);
       //todo remove from list
     };
@@ -62,7 +87,7 @@ function WorkoutPage(props) {
     }
 
     function addExercise(exerciseType) {
-        setExerciseCount(exerciseCount + 1);
+        
         //var key = exerciseCount-1;
         var result = exerciseInfo.find(obj => {
             return obj.title === exerciseType;
@@ -70,6 +95,7 @@ function WorkoutPage(props) {
         let data = {title: exerciseType, sets: '0', reps: '0', weight: '0', id: {exerciseCount},
                     desc: result.description, imageUrl: result.imageUrl};
         exerciseArray.push(data);
+        setExerciseCount(exerciseCount + 1);
         setExerciseArray(exerciseArray);
         //alert(exerciseArray.length);
     };
@@ -77,10 +103,10 @@ function WorkoutPage(props) {
     return (
       <Grid container direction="column">
         <Grid item>
-          <h1>NavBar</h1>
+          <h1>Navbar</h1>
           <h1> 
             <Button
-            onClick={()=>{alert(workoutTitle);}}
+            onClick={()=>{save();}}
             style = {{color: "white",
                      background:"green",
                     }}>
@@ -131,6 +157,7 @@ function WorkoutPage(props) {
         MenuListProps={{
           'aria-labelledby': 'basic-button',
         }}
+        direction="vertical"
       >
         <MenuItem onClick={()=>{handleMenuOptionClick("Pullup")}}>Pullup</MenuItem>
         <MenuItem onClick={()=>{handleMenuOptionClick("Pushup")}}>Pushup</MenuItem>
@@ -169,6 +196,7 @@ function WorkoutPage(props) {
 
 WorkoutPage.defaultProps = { title: "New Workout" }
 export default WorkoutPage
+
 
 /*<Button
             onClick={()=>addExercise()}
