@@ -26,7 +26,7 @@ Install mui/material and dependency packages
 
 Install react router
 
-### 'npm install react-google-login'
+### `npm install react-google-login`
 
 Install google login function
 
