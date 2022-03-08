@@ -26,10 +26,6 @@ Install mui/material and dependency packages
 
 Install react router
 
-### `npm install react-google-login`
-
-Install google login function
-
 ### `npm install firebase`
 
 Install firebase module necessary for write and read data from the realtime data base
