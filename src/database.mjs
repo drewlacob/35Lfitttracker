@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getDatabase, ref, set, onValue, update, get, child } from "firebase/database";
+import { getDatabase, ref, set, onValue, update, remove } from "firebase/database";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -31,30 +31,10 @@ function addFitRecord(db, userId, wname, date, exer, s, r, w) {
   return update(ref(db), updates)
 }
 
-var result;
-
-//Return the user's name and email
-function getUserData(db, userId) {
-  result = null;
-  const userRef = ref(db, 'users/' + userId);
-  onValue(userRef, (snapshot) => {
-    //console.log(snapshot.val());
-    result = snapshot.val();
-  });
-  return result;
-}
-
-var hist;
-
-//Return the history of the given date
-function getHistory(db, userId, date) {
-  hist = null;
-  const histRef = ref(db, 'users/' + userId + '/history/' + date);
-  onValue(histRef, (snapshot) => {
-    //console.log(snapshot.val());
-    hist = snapshot.val();
-  });
-  return hist;
+//Clear the specified workout 
+function clearUserData(db, userId, date, wname) {
+  const tempRef = ref(db, 'users/' + userId + '/history/' + date + '/' + wname);
+  return remove(tempRef);
 }
 
 //module.exports = { firebaseConfig, writeUserData, addFitRecord, getUserData };
@@ -63,4 +43,4 @@ function getHistory(db, userId, date) {
 //exports.addFitRecord = addFitRecord;
 //exports.getUserData = getUserData;
 
-export { firebaseConfig, writeUserData, addFitRecord, getUserData, getHistory };
+export { firebaseConfig, writeUserData, addFitRecord, clearUserData };
