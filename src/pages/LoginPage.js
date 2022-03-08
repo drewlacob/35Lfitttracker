@@ -4,7 +4,6 @@ import TextField from '@material-ui/core/TextField';
 import Stack from '@mui/material/Stack';
 import Button from '@material-ui/core/Button';
 
-// import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import { getUserData, getHistory, writeUserData, addFitRecord } from '../database.mjs'
@@ -13,6 +12,7 @@ import { getDatabase, ref, set, onValue, update, child, get } from "firebase/dat
 
 import ReactDOM from 'react-dom';
 import GoogleLogin from 'react-google-login';
+import axios from 'axios'
 
 const firebaseConfig = {
     apiKey: "AIzaSyCx73o4Xoji7lIZNJkQPPJbj2cN_PTmnLU",
@@ -23,54 +23,36 @@ const firebaseConfig = {
     appId: "1:354020103908:web:4b38521a33843a6c0e7ef1",
     measurementId: "G-FR0ZBYGG34"
   };
+
+  const firebaseConfig2 = {
+    apiKey: "AIzaSyDTm5F8321tlyGf9LyVe1vfbIN2Q2HJUZs",
+    authDomain: "testdatabase-d2671.firebaseapp.com",
+    projectId: "testdatabase-d2671",
+    storageBucket: "testdatabase-d2671.appspot.com",
+    messagingSenderId: "598742770770",
+    appId: "1:598742770770:web:cf3baa07f0561a47c12b8b"
+  };
   
-var app = initializeApp(firebaseConfig);
+var app = initializeApp(firebaseConfig2);
 var db = getDatabase(app); 
 
-var user_id = '';
-var user_name = '';
-var user_email = '';
+window.user_id = '';
+window.user_name = '';
+window.user_email = '';
 
-// function googleLogin() {
-
-//     <head>
-//     <script defer src="/__/firebase/9.6.7/firebase-app-compat.js"></script>
-//     <script defer src="/__/firebase/9.6.7/firebase-auth-compat.js"></script>
-//     <script defer src="/__/firebase/9.6.7/firebase-database-compat.js"></script>
-//     <script defer src="/__/firebase/9.6.7/firebase-firestore-compat.js"></script>
-//     <script defer src="/__/firebase/9.6.7/firebase-functions-compat.js"></script>
-//     <script defer src="/__/firebase/9.6.7/firebase-messaging-compat.js"></script>
-//     <script defer src="/__/firebase/9.6.7/firebase-storage-compat.js"></script>
-//     <script defer src="/__/firebase/9.6.7/firebase-analytics-compat.js"></script>
-//     <script defer src="/__/firebase/9.6.7/firebase-remote-config-compat.js"></script>
-//     <script defer src="/__/firebase/9.6.7/firebase-performance-compat.js"></script>
-//     <script defer src="/__/firebase/init.js?useEmulator=true"></script>
-//     </head>
-//     // document.write("hello");
-//     // window.location.href = "http://localhost:3000/workouts";
-//     const provider = new firebase.auth.GoogleAuthProvider();
-//     // var app = initializeApp(firebaseConfig);
-//     // var db = getDatabase(app);    
-
-//     firebase.auth().signInWithPopup(provider)
-//         .then(result => {
-//         const user = result.user;
-//         writeUserData(db, "id", user.displayName, user.email);
-//         // document.write("Hello " + user.displayName + '<br>');
-//         // document.write("Your email is " + user.email);
-                
-//     }) 
-//     }
 
     const handleLogin = (response) => {
         console.log("Name: ", response.profileObj.name);
         console.log("Email: ", response.profileObj.email);
-        user_name = response.profileObj.namel
-        user_email = response.profileObj.email;
-        writeUserData(db, "id", response.profileObj.name, response.profileObj.email);
+        window.user_name = response.profileObj.name;
+        window.user_email = response.profileObj.email;
+        window.user_id = (window.user_email.split('@'))[0];
+        console.log("ID: ", window.user_id);
+        axios.get('http://localhost:8888/addUser?user=' + window.user_id + '&name=' + window.user_name + '&email=' + window.user_email)
+        .then(function (response) {
+            console.log(response);
+        })
         window.open("http://localhost:3000/workouts","_self");
-
-        // window.location.href = "http://localhost:3000/workouts";
         return;
 
     }
@@ -84,10 +66,14 @@ function LoginPage() {
         <div className="LoginPage">
             <header className="Login-header">
                 <h1>
-                FITTRACKER
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnXYB2fDOtIZfpYXb-cJli0tBPBpt9n6xoug&usqp=CAU" width="200" height="250"></img>
+                
                 </h1>
-                <h2>
-                    <Stack>
+                <h2>FITTRACKER</h2>
+                <h3>
+                    Welcome to FITTRACKER!
+                    Click below to login with a Google account
+                    {/* <Stack>
                         <TextField
                             hintText="Email"
                             floatingLabelText="Email"
@@ -102,17 +88,10 @@ function LoginPage() {
                             variant="filled"
                             label="password"
                         /> 
-                    </Stack>
-                    <h2><span> {''} </span></h2>
-                    {/* <script src="/__/firebase/7.14.2/firebase-app.js"></script>
-                    <script src="/__/firebase/7.14.2/firebase-auth.js"></script>
-                    <script src="/__/firebase/7.14.2/firebase-database.js"></script>
-                    <script src="/__/firebase/7.14.2/firebase-firestore.js"></script>
-                    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/8.2.2/firebase-app.min.js"></script>
-                    <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-analytics.js"></script>
-                    <script src="/__/firebase/init.js"></script>
-                    <script src="/Users/briantaylor/35l/35Lfitttracker/src/login.js"></script> */}
-                    <Button 
+                    </Stack> */}
+                    <h3><span> {''} </span></h3>
+
+                    {/* <Button 
                         startIcon = {<InputIcon/>}
                         style={{
                             borderRadius: 35,
@@ -125,18 +104,17 @@ function LoginPage() {
                         variant="contained"
                     >
                     LOGIN
-                    </Button>
+                    </Button> */}
                     <GoogleLogin
-    clientId="591488866923-derl6gh19ssvf5s69227duns2lvo8dv9.apps.googleusercontent.com"
-    buttonText="Log in with Google"
-    onSuccess={handleLogin}
-    // isSignedIn={true}
-    onFailure={handleLogin}
-    cookiePolicy={'single_host_origin'}
-/>
-                </h2>
+                        clientId="591488866923-derl6gh19ssvf5s69227duns2lvo8dv9.apps.googleusercontent.com"
+                        buttonText="Log in with Google"
+                        onSuccess={handleLogin}
+                        onFailure={handleLogin}
+                        cookiePolicy={'single_host_origin'}
+                    />
+                </h3>
                 
-                <a
+                {/* <a
                     className="App-link"
                     href="https://reactjs.org"
                     target="_blank"
@@ -151,7 +129,7 @@ function LoginPage() {
                         }}
                 >
                 New member? Create account
-                </a>
+                </a> */}
             </header>
         </div>            
     )
