@@ -11,7 +11,8 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 
 function WorkoutPage(props) {
-    const { title, date, count, userID } = props;
+    const { title, date, count, userID, cameFromHistory } = props;
+    const axios = require('axios');
     let initialArray = [
         //{title: 'Pushup', imageUrl:"https://miro.medium.com/max/645/1*WZmDgcJO40Va5mVgdfbz7g@2x.jpeg", sets: '5', reps: '123', weight: '10', id: '0'}
       ];
@@ -19,6 +20,8 @@ function WorkoutPage(props) {
     const [exerciseArray, setExerciseArray] = useState(initialArray);
     const [exerciseCount, setExerciseCount] = useState(0);
     const [workoutTitle, setWorkoutTitle] = useState(props.title);
+    const [stateUserID, setUserID] = useState(props.userID);
+    const [stateDate, setDate] = useState(props.date);
 
     //dropdown button
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -33,7 +36,14 @@ function WorkoutPage(props) {
         setAnchorEl(null);
         addExercise(exerciseType);
     };
-    //
+
+    useEffect(() => {
+      //cameFromHistory = true;
+      if (cameFromHistory) {
+        load();
+      }
+    }, []);
+    
 
     const getExerciseCard = exerciseCardObject => {
         return (
@@ -46,8 +56,58 @@ function WorkoutPage(props) {
         );
       };
       //handleDelete(exerciseCount-1)
-    function save(){
-      console.log(window.data); // window.data contains all the data about all the exercises
+    function load() {
+      var userID = stateUserID;
+      var date = stateDate;
+      var workoutName = workoutTitle;
+      var httpstring = 'http://localhost:8888/history?user=' + userID +
+                      '&date=' + date + '&workname=' + workoutName;
+      console.log(httpstring);
+      axios.get(httpstring)
+      .then(function (response) {
+      // handle success
+        console.log(response.data)
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+      .then(function () {
+      // always executed
+      });
+    }
+
+    function save() {
+      //console.log(window.data); // window.data contains all the data about all the exercises
+      for (var i = 0, l = exerciseArray.length; i < l; i++) {
+        var title = exerciseArray[i].title;
+        var sets = window.data[i][1];
+        var reps = window.data[i][2];
+        var weight = window.data[i][3];
+        var userID = stateUserID;
+        var date = stateDate;
+        var workoutName = workoutTitle;
+        //var httpstring = "localhost:8888/addRecord?user=";
+        var httpstring = "http://localhost:8888/addRecord?user=" +
+                        userID + "&date=" + date + "&workname=" +
+                        workoutName + "&exer=" + title + "&s=" +
+                        sets + "&r=" + reps + "&w=" + weight;
+        console.log("httpstring:");
+        console.log(httpstring);
+      }
+ 
+      axios.get(httpstring)
+        .then(function (response) {
+        // handle success
+          console.log(response)
+        })
+        .catch(function (error) {
+          // handle error
+          console.log(error);
+        })
+        .then(function () {
+        // always executed
+        });
       alert(workoutTitle);
         //todo implement saving to db
     };
@@ -61,10 +121,6 @@ function WorkoutPage(props) {
       setExerciseArray(exerciseArray);
       //todo remove from list
     };
-
-    function updateExercise(){
-        //todo implement changing of exercise data to reflect in list
-    }
 
     function addExercise(exerciseType) {
         setExerciseCount(exerciseCount + 1);
@@ -174,7 +230,7 @@ function WorkoutPage(props) {
         </Grid>
 */
 
-WorkoutPage.defaultProps = { title: "New Workout" }
+WorkoutPage.defaultProps = { title: "New Workout", date: "03\\11\\2022", count: 0, userID: 1234, cameFromHistory: true }
 export default WorkoutPage
 
 /*<Button
