@@ -6,13 +6,12 @@ import {
   Typography,
   makeStyles,
   IconButton, 
+  Button
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import HistoryIcon from "@mui/icons-material/History";
-import WorkoutPage from '../pages/WorkoutPage'
 
-
-const useStyles = makeStyles((theme) => ({
+/*const useStyles = makeStyles((theme) => ({
   navbar: {
     background: "linear-gradient(45deg, #cceffc, #ccd9de)", 
     color: "black",
@@ -30,17 +29,49 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "20px",
     marginLeft: theme.spacing(2),
   },
-}));
+}));*/
 
 function Navbar() {
-  const classes = useStyles();
+  //const classes = useStyles();
 
   function newWorkout() {
     window.location.reload(false)
   }
 
   return (
-    <AppBar className={classes.navbar}>
+    <AppBar>
+      <Toolbar>
+        <Typography> 
+          Name
+        </Typography>
+          <div>
+            <Link to="/workouts">
+              <AddIcon/>
+            </Link>
+            <Link to="/history">
+              <HistoryIcon/>
+            </Link>
+          </div>
+      </Toolbar>
+    </AppBar>
+  );
+}
+export default Navbar;
+
+/*
+<Link to="/workouts" className={classes.link}> {}
+                <IconButton aria-label="app" onClick={()=>WorkoutPage.newWorkout()}>
+                  <AddIcon/>
+                </IconButton>
+            </Link> 
+              <IconButton onClick={()=>newWorkout()}>
+                <AddIcon/>
+            </IconButton>
+            <IconButton>
+                  <HistoryIcon/>
+                </IconButton> */
+
+  /*<AppBar className={classes.navbar}>
       <Toolbar>
         <Typography className={classes.name}> 
           Name
@@ -56,14 +87,4 @@ function Navbar() {
             </Link>
           </div>
       </Toolbar>
-    </AppBar>
-  );
-}
-export default Navbar;
-
-/*
-<Link to="/workouts" className={classes.link}> {}
-                <IconButton aria-label="app" onClick={()=>WorkoutPage.newWorkout()}>
-                  <AddIcon/>
-                </IconButton>
-            </Link> */
+    </AppBar>*/
