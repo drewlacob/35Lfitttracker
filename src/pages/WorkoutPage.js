@@ -67,6 +67,22 @@ function WorkoutPage(props) {
       .then(function (response) {
       // handle success
         console.log(response.data)
+        const exerciseData = response.data.split("\n");
+        for (var i = 0, l = exerciseData.length - 1; i < l; i++) {
+          var exer = exerciseData[i].split(' ');
+          console.log(exer[0]);
+          
+          var result = exerciseInfo.find(obj => {
+          return obj.title === exer[0];
+        })
+        
+        let data = {title: exer[0], sets: exer[1], reps: exer[2], weight: exer[3], id: exerciseCount,
+        desc: result.description, imageUrl: result.imageUrl};
+        //console.log(data);
+        exerciseArray.push(data);
+        setExerciseArray(exerciseArray);
+      }
+
       })
       .catch(function (error) {
         // handle error
@@ -78,6 +94,10 @@ function WorkoutPage(props) {
     }
 
     function save() {
+      console.log(window.user_id);
+      console.log(window.user_name);
+      console.log(window.user_email);
+
       //console.log(window.data); // window.data contains all the data about all the exercises
       for (var i = 0, l = exerciseArray.length; i < l; i++) {
         var title = exerciseArray[i].title;
@@ -230,7 +250,7 @@ function WorkoutPage(props) {
         </Grid>
 */
 
-WorkoutPage.defaultProps = { title: "New Workout", date: "03\\11\\2022", count: 0, userID: 1234, cameFromHistory: true }
+WorkoutPage.defaultProps = { title: "New Workout", date: "03\\11\\2022", count: 0, userID: window.userID, cameFromHistory: true }
 export default WorkoutPage
 
 /*<Button
