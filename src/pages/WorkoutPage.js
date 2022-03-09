@@ -13,6 +13,10 @@ import MenuItem from '@mui/material/MenuItem';
 function WorkoutPage(props) {
     const { title, date, count, userID, cameFromHistory } = props;
     const axios = require('axios');
+    
+    //console.log("User name");
+    //let name = sessionStorage.getItem("user_name");
+    //console.log(name);
     let initialArray = [
         //{title: 'Pushup', imageUrl:"https://miro.medium.com/max/645/1*WZmDgcJO40Va5mVgdfbz7g@2x.jpeg", sets: '5', reps: '123', weight: '10', id: '0'}
       ];
@@ -69,6 +73,7 @@ function WorkoutPage(props) {
         console.log(response.data)
         const exerciseData = response.data.split("\n");
         for (var i = 0, l = exerciseData.length - 1; i < l; i++) {
+          setExerciseCount(exerciseCount + 1);
           var exer = exerciseData[i].split(' ');
           console.log(exer[0]);
           
@@ -76,12 +81,13 @@ function WorkoutPage(props) {
           return obj.title === exer[0];
         })
         
-        let data = {title: exer[0], sets: exer[1], reps: exer[2], weight: exer[3], id: exerciseCount,
+        let data = {title: exer[0], sets: exer[1], reps: exer[2], weight: exer[3], id: i,//exerciseCount,
         desc: result.description, imageUrl: result.imageUrl};
         //console.log(data);
         exerciseArray.push(data);
         setExerciseArray(exerciseArray);
       }
+      console.log(exerciseArray);
 
       })
       .catch(function (error) {
@@ -94,19 +100,36 @@ function WorkoutPage(props) {
     }
 
     function save() {
-      console.log(window.user_id);
-      console.log(window.user_name);
-      console.log(window.user_email);
+      var userID = stateUserID;
+      var date = stateDate;
+      var workoutName = workoutTitle;
+      var clearhttp = "http://localhost:8888/clear?user=" + userID + "&date=" + date + "&workname=" + workoutName;
 
+      console.log("userID");
+      console.log(userID);
+      console.log("date");
+      console.log(date);
+      console.log("workoutName");
+      console.log(workoutName);
+
+      axios.get(clearhttp)
+      .then(function (response) {
+      // handle success
+        console.log(response)
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+      .then(function () {
+           //todo implement saving to db
       //console.log(window.data); // window.data contains all the data about all the exercises
       for (var i = 0, l = exerciseArray.length; i < l; i++) {
         var title = exerciseArray[i].title;
         var sets = window.data[i][1];
         var reps = window.data[i][2];
         var weight = window.data[i][3];
-        var userID = stateUserID;
-        var date = stateDate;
-        var workoutName = workoutTitle;
+      
         //var httpstring = "localhost:8888/addRecord?user=";
         var httpstring = "http://localhost:8888/addRecord?user=" +
                         userID + "&date=" + date + "&workname=" +
@@ -114,9 +137,7 @@ function WorkoutPage(props) {
                         sets + "&r=" + reps + "&w=" + weight;
         console.log("httpstring:");
         console.log(httpstring);
-      }
- 
-      axios.get(httpstring)
+        axios.get(httpstring)
         .then(function (response) {
         // handle success
           console.log(response)
@@ -128,18 +149,33 @@ function WorkoutPage(props) {
         .then(function () {
         // always executed
         });
+      }
+ 
+      
       alert(workoutTitle);
         //todo implement saving to db
+      // always executed
+      });
+   
     };
 
     function handleDelete(id) {
+      console.log("exercise array");
+      console.log(exerciseArray);
       setExerciseCount(exerciseCount-1);
       exerciseArray.splice(id, 1);
       for (let i = id; i < exerciseArray.length; i++) { // adjust the id #s of the elements after the one deleted
         exerciseArray[i].id -= 1;
       }
       setExerciseArray(exerciseArray);
-      //todo remove from list
+      console.log(exerciseArray);
+      console.log(window.data);
+      window.ids.splice(id, 1);
+      for (let i = id; i < window.ids.length; i++) { // adjust the id #s of the elements after the one deleted
+        window.ids[i] -= 1;
+      }
+      window.data.splice(id, 1);
+      console.log(window.data);
     };
 
     function addExercise(exerciseType) {
@@ -158,8 +194,8 @@ function WorkoutPage(props) {
     return (
       <Grid container direction="column">
         <Grid item>
+          <h1 style = {{}}></h1>
           <Navbar></Navbar>
-          <h1>NavBar</h1>
           <h1> 
             <Button
             onClick={()=>{save()}}
@@ -250,7 +286,8 @@ function WorkoutPage(props) {
         </Grid>
 */
 
-WorkoutPage.defaultProps = { title: "New Workout", date: "03\\11\\2022", count: 0, userID: window.userID, cameFromHistory: true }
+// TODO: change cameFromHistory to false!
+WorkoutPage.defaultProps = { title: "New Workout", date: "03\\11\\2022", count: 0, userID: "1234", cameFromHistory: true }
 export default WorkoutPage
 
 /*<Button
