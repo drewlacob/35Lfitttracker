@@ -1,6 +1,6 @@
-import { firebaseConfig, getUserData, getHistory, writeUserData, addFitRecord } from './database.mjs'
+import { firebaseConfig, writeUserData, addFitRecord, clearUserData } from './database.mjs'
 import { initializeApp } from 'firebase/app';
-import { getDatabase, ref, set, onValue, update, child, get } from "firebase/database";
+import { getDatabase, ref, set, onValue, update } from "firebase/database";
 import http from 'http';
 import url from 'url';
 import util from 'util';
@@ -82,7 +82,7 @@ var server = http.createServer( function (request, response) {
       addFitRecord(db, uid, wname, date, params.exer, params.s, params.r, params.w);
       response.end('Finished');
     }
-    else if (pathname == '/allHist'){
+    else if (pathname == '/allHist') {
       var uid = params.user;
       var chunk = '';
       const histRef = ref(db, 'users/' + params.user + '/history');
@@ -103,6 +103,13 @@ var server = http.createServer( function (request, response) {
         response.write(chunk);
         response.end();
       });
+    }
+    else if (pathname == '/clear') {
+      var uid = params.user;
+      var day = params.date;
+      var wname = params.workname;
+      clearUserData(db, uid, day, wname);
+      response.end('Finished');
     }
 
 });
