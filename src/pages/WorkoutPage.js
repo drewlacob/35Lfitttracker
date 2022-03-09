@@ -46,7 +46,7 @@ function WorkoutPage(props) {
 
     useEffect(() => {
       //cameFromHistory = true;
-      if (cameFromHistory) {
+      if (window.fromHistory === 1) {
         load();
       }
     }, []);
