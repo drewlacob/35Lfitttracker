@@ -30,6 +30,10 @@ Install react router
 
 Install firebase module necessary for write and read data from the realtime data base
 
+### `npm install react-google-login`
+
+Install react's Google login function
+
 ## Available Scripts
 
 After install the necessary modules, run the following codes to run the app:
