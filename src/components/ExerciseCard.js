@@ -13,29 +13,40 @@ import Box from '@mui/material/Box'
 import Input from '@material-ui/core/Input';
 import ReactDOM from 'react-dom'
 import WorkoutPage from '../pages/WorkoutPage'
+import { ContactSupportOutlined } from '@material-ui/icons';
 
-window.ids = [];
+//window.ids = [];
 window.data = [[]];
-
-var state = 0;
 
 const ExerciseCard = props => {
   const { imageUrl, title, desc, sets, reps, weight, id } = props;
 
   console.log(props.id);
   
-  var add = true;
+  /*var add = true;
   for (let i = 0; i < window.ids.length; i++) {
-    if (window.ids[i] == props.id)
+    if (window.ids[i] == props.title)
       add = false;
   }
   if (add) {
+     console.log("Adding id " + props.id + " " + props.title + " " + props.sets + " " + props.reps + " " + props.weight);
      window.ids.push(props.id);
      console.log("Added to window ids: ID #: " + props.id);
      window.data[props.id] = [props.title, props.sets, props.reps, props.weight]; // initialize the sets, reps, and weight to 0's
+<<<<<<< HEAD
      console.log("Initialized window data exercise: ");
      console.log(window.data[props.id]);
   }
+=======
+  }*/
+  window.data[props.id] = [props.title, props.sets, props.reps, props.weight];
+  console.log("data at props id" + window.data[props.id]);
+  /*for (let i = 0; i < window.ids.length; i++) {
+    if (window.data[i][1] == props.sets) {
+
+    }
+  }*/
+>>>>>>> 6557fe464e61155b0a6f9c1e348a9956ee4290c4
 
   function handleChange(event, field)  {
     console.log("props id");
