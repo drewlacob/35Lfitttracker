@@ -172,6 +172,55 @@ else if(numWorkouts.length === 2){
   </Box>
   );
 }
+else if(numWorkouts.length === 3){
+  return (
+    <Box sx={{ flexGrow: 1}}>
+    <NavBar></NavBar>
+          <List dense={dense} sx={{ width: '200%', maxWidth: 360, bgcolor: 'background.blue'}}>
+            
+              <ListItem
+                secondaryAction={
+                  <Button onClick={() => { updateDFromHistory(getCurDate(0)); updateFromHistory(getWorkoutName(0)); navigate("/workouts") }} variant="contained" endIcon={<PlayCircleFilledWhiteIcon />}>
+                  Start
+                  </Button>
+                }
+              >
+                <ListItemText
+                  primary= {getWorkoutName(0)}
+                  secondary={getCurDate(0)}
+                />
+              </ListItem>
+              <ListItem
+                secondaryAction={
+                  <Button onClick={() => { updateDFromHistory(getCurDate(1)); updateFromHistory(getWorkoutName(1)); navigate("/workouts") }} variant="contained" endIcon={<PlayCircleFilledWhiteIcon />}>
+                  Start
+                  </Button>
+                }
+              >
+                <ListItemText
+                  primary= {getWorkoutName(1)}
+                  secondary={getCurDate(1)}
+                  
+                />
+              </ListItem>
+              <ListItem
+                secondaryAction={
+                  <Button onClick={() => { updateDFromHistory(getCurDate(2)); updateFromHistory(getWorkoutName(2)); navigate("/workouts") }} variant="contained" endIcon={<PlayCircleFilledWhiteIcon />}>
+                  Start
+                  </Button>
+                }
+              >
+                <ListItemText
+                  primary= {getWorkoutName(2)}
+                  secondary={getCurDate(2)}
+                  
+                />
+              </ListItem>
+             
+          </List>
+  </Box>
+  );
+}
 else if(numWorkouts.length === 4){
   return (
     <Box sx={{ flexGrow: 1}}>
@@ -869,5 +918,5 @@ else if(numWorkouts.length === 10){
 }
 else{
   console.log("i ran awwww");
-  return <div>NOPE</div>;
+  return <div>Whoops, something went wrong :(</div>;
 }}
