@@ -22,6 +22,8 @@ var state = 0;
 const ExerciseCard = props => {
   const { imageUrl, title, desc, sets, reps, weight, id } = props;
 
+  console.log(props.id);
+  
   var add = true;
   for (let i = 0; i < window.ids.length; i++) {
     if (window.ids[i] == props.id)
@@ -29,10 +31,12 @@ const ExerciseCard = props => {
   }
   if (add) {
      window.ids.push(props.id);
-     window.data[props.id] = [props.title, 0, 0, 0]; // initialize the sets, reps, and weight to 0's
+     window.data[props.id] = [props.title, props.sets, props.reps, props.weight]; // initialize the sets, reps, and weight to 0's
   }
 
   function handleChange(event, field)  {
+    console.log("props id");
+    console.log(props.id);
     switch(field) {
       case 0:
         //console.log(props.sets);
