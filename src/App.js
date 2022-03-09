@@ -5,11 +5,17 @@ import WorkoutPage from './pages/WorkoutPage.js';
 import HistoryPage from './pages/HistoryPage.js'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 window.result = ""
-
+var UID = "";
+let name = sessionStorage.getItem("user_name")
+console.log("UID: ")
+console.log(UID)
+console.log("name: ")
+console.log(name)
+window.fromhist = 0;
 //import { Switch, Link, Redirect } from 'react-router-dom';
 const axios = require('axios');
 function renderMyData(){
-axios.get('http://localhost:8888/allHist?user=1234')
+axios.get('http://localhost:8888/allHist?user=' + UID)
           .then(function (response) {
     // handle success
              window.result = response.data;
@@ -53,13 +59,13 @@ class App extends Component {
 
 renderMyData(){
   console.log("running comp")
-  axios.get('http://localhost:8888/allHist?user=1234')
+  UID = sessionStorage.getItem("user_id")
+  axios.get('http://localhost:8888/allHist?user=' + UID)
             .then(function (response) {
       // handle success
                window.result = response.data;
                console.log("Just got it");
                console.log(window.result);
-               
              })
              .catch(function (error) {
       // handle error
@@ -78,6 +84,7 @@ renderMyData(){
           <header className="App-header">
             <Router>
               <Routes>
+                <Route path="" element={<LoginPage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/workouts" element={<WorkoutPage />} />
                 <Route path="/history" element={this.state.done ? <HistoryPage /> : <div> LOADING </div>} />
