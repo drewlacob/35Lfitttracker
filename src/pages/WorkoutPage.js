@@ -21,11 +21,14 @@ function WorkoutPage(props) {
         //{title: 'Pushup', imageUrl:"https://miro.medium.com/max/645/1*WZmDgcJO40Va5mVgdfbz7g@2x.jpeg", sets: '5', reps: '123', weight: '10', id: '0'}
       ];
     let exerciseInfo = constants;
+    const d = new Date();
     const [exerciseArray, setExerciseArray] = useState(initialArray);
     const [exerciseCount, setExerciseCount] = useState(0);
-    const [workoutTitle, setWorkoutTitle] = useState(props.title);
-    const [stateUserID, setUserID] = useState(props.userID);
-    const [stateDate, setDate] = useState(props.date);
+    const [workoutTitle, setWorkoutTitle] = useState(window.current_workout);
+    const [stateUserID, setUserID] = useState(sessionStorage.getItem("user_id"));
+    const [stateDate, setDate] = useState(d.getMonth() + "\\" + d.getDate() + "\\" + d.getFullYear());
+
+    //console.log("Date");
 
     //dropdown button
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -50,6 +53,7 @@ function WorkoutPage(props) {
     
 
     const getExerciseCard = exerciseCardObject => {
+      console.log("getting exercise card");
         return (
             <div>
             <ExerciseCard {...exerciseCardObject} />
@@ -62,6 +66,8 @@ function WorkoutPage(props) {
       //handleDelete(exerciseCount-1)
     function load() {
       var userID = stateUserID;
+      console.log(sessionStorage.getItem("user_id"));
+      console.log("userid" + userID);
       var date = stateDate;
       var workoutName = workoutTitle;
       var httpstring = 'http://localhost:8888/history?user=' + userID +
@@ -70,25 +76,50 @@ function WorkoutPage(props) {
       axios.get(httpstring)
       .then(function (response) {
       // handle success
-        console.log(response.data)
-        const exerciseData = response.data.split("\n");
-        for (var i = 0, l = exerciseData.length - 1; i < l; i++) {
-          setExerciseCount(exerciseCount + 1);
-          var exer = exerciseData[i].split(' ');
-          console.log(exer[0]);
-          
+          // TODO: clean up this code, one of these methods should work (need to decide if we enter for loop if response is "error")
+        if (response.data === "Error\n") {
+          return;
+        }
+        console.log("Response: " + response.data + response.data.length);
+        console.log(response.data.search("\n"));
+        // might be error with multiple exercises and the last exercise
+        var exerciseData = [];
+        console.log((response.data.match(/\n/g) || []).length);
+        if (response.data.search("\n") !== -1) { // contains newlines
+          exerciseData = response.data.split("\n");
+        }
+        console.log("Data split by newline: " + exerciseData);
+        //if exerciseData.length
+        console.log("exer length" + exerciseData.length);
+        const l = exerciseData.length - 1;
+        var exer = [];
+        for (var i = 0; i < l; i++) {
+          //setExerciseCount(exerciseCount + 1);
+          //console.log("coutn" + exerciseCount);
+          if (exerciseData[i].search("Bench") != -1) {
+            var temp_exer = exerciseData[i].split(' ');
+            exer[0] = "Bench Press";
+            exer[1] = temp_exer[2];
+            exer[2] = temp_exer[3];
+            exer[3] = temp_exer[4];
+          }
+          else {
+            exer = exerciseData[i].split(' '); // what if no spaces??
+          }
+          console.log(exer[0] + exer[0].length);
           var result = exerciseInfo.find(obj => {
           return obj.title === exer[0];
         })
         
-        let data = {title: exer[0], sets: exer[1], reps: exer[2], weight: exer[3], id: i,//exerciseCount,
+        //console.log(result);
+        let data = {title: exer[0], sets: exer[2], reps: exer[1], weight: exer[3], id: i,//exerciseCount,
         desc: result.description, imageUrl: result.imageUrl};
-        //console.log(data);
+        //console.log("Pushing data:" + data);
         exerciseArray.push(data);
         setExerciseArray(exerciseArray);
       }
       console.log(exerciseArray);
-
+      console.log(exerciseArray.length);
       })
       .catch(function (error) {
         // handle error
@@ -160,31 +191,44 @@ function WorkoutPage(props) {
     };
 
     function handleDelete(id) {
-      console.log("exercise array");
-      console.log(exerciseArray);
-      setExerciseCount(exerciseCount-1);
+      console.log("deleting index " + id); //  G
+      console.log("size of exerciseArray pre deletion " + exerciseArray.length); // G
+      
+      //setExerciseCount(exerciseCount-1); 
+      //console.log("exerciseArray indexes and sets pre deletion");  G
+      /*for (let i = 0; i < exerciseArray.length; i++) {
+        console.log("id: " + exerciseArray[i].id); //stored as character!   // for loop G
+        console.log("sets: " + exerciseArray[i].sets);
+      }*/
       exerciseArray.splice(id, 1);
-      for (let i = id; i < exerciseArray.length; i++) { // adjust the id #s of the elements after the one deleted
-        exerciseArray[i].id -= 1;
-      }
-      setExerciseArray(exerciseArray);
-      console.log(exerciseArray);
-      console.log(window.data);
+      console.log("size of exerciseArray post deletion " + exerciseArray.length); // G
       window.ids.splice(id, 1);
       for (let i = id; i < window.ids.length; i++) { // adjust the id #s of the elements after the one deleted
         window.ids[i] -= 1;
       }
+      for (let i = id; i < exerciseArray.length; i++) { // adjust the id #s of the elements after the one deleted
+        exerciseArray[i].id -= 1;
+        //console.log("adjusting exerciseArray " + i);   G
+      }
+      setExerciseArray(exerciseArray);
+      //console.log("exerciseArray indexes after deletion");    G
+      /*for (let i = 0; i < exerciseArray.length; i++) {
+        console.log("id: " + exerciseArray[i].id); //stored as character!     // for loop G
+        console.log("sets: " + exerciseArray[i].sets);
+      }*/
+      //console.log("Window data pre deletion\n" + window.data);   G
       window.data.splice(id, 1);
-      console.log(window.data);
+      //console.log("Window data post deletion\n" + window.data);   G
     };
 
     function addExercise(exerciseType) {
-        setExerciseCount(exerciseCount + 1);
+        console.log(exerciseType + exerciseType.length);
+        //setExerciseCount(exerciseCount + 1);
         //var key = exerciseCount-1;
         var result = exerciseInfo.find(obj => {
             return obj.title === exerciseType;
           })
-        let data = {title: exerciseType, sets: '0', reps: '0', weight: '0', id: exerciseCount,
+        let data = {title: exerciseType, sets: '0', reps: '0', weight: '0', id: exerciseArray.length, //exerciseCount,
                     desc: result.description, imageUrl: result.imageUrl};
         exerciseArray.push(data);
         setExerciseArray(exerciseArray);
@@ -194,8 +238,9 @@ function WorkoutPage(props) {
     return (
       <Grid container direction="column">
         <Grid item>
-          <h1 style = {{}}></h1>
+          <h1 style = {{paddingTop: "10px"}}></h1>
           <Navbar></Navbar>
+          <h1 style = {{paddingTop: "10px"}}></h1>
           <h1> 
             <Button
             onClick={()=>{save()}}
@@ -287,7 +332,7 @@ function WorkoutPage(props) {
 */
 
 // TODO: change cameFromHistory to false!
-WorkoutPage.defaultProps = { title: "New Workout", date: "03\\11\\2022", count: 0, userID: "1234", cameFromHistory: true }
+WorkoutPage.defaultProps = { title: "NewWorkout", date: "03\\11\\2022", count: 0, userID: "1234", cameFromHistory: true }
 export default WorkoutPage
 
 /*<Button
