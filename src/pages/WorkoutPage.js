@@ -56,6 +56,7 @@ function WorkoutPage(props) {
 
     useEffect(() => {
       //cameFromHistory = true;
+<<<<<<< HEAD
       if (cameFromHistory) {
         setUserID(sessionStorage.getItem("user_id"));
         setWorkoutTitle(window.current_workout);
@@ -64,6 +65,9 @@ function WorkoutPage(props) {
         console.log("Window current date: " + window.current_date);
         console.log("Workout Title: " + workoutTitle);
         console.log("Current Date: " + date);
+=======
+      if (window.fromHistory === 1) {
+>>>>>>> 9b833dea410fe914ec14de4644472f77fa870474
         load();
         
       }
