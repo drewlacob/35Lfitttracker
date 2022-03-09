@@ -23,10 +23,12 @@ function WorkoutPage(props) {
     let exerciseInfo = constants;
     const [exerciseArray, setExerciseArray] = useState(initialArray);
     const [exerciseCount, setExerciseCount] = useState(0);
-    const [workoutTitle, setWorkoutTitle] = useState(props.title);
+    const [workoutTitle, setWorkoutTitle] = useState(window.current_workout);
     const [stateUserID, setUserID] = useState(props.userID);
     const [stateDate, setDate] = useState(props.date);
-
+    let SessionsUserID = sessionStorage.getItem("user_id");
+    console.log(SessionsUserID);
+    //setUserID(sessionStorage.getItem("user_id"));
     //dropdown button
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
@@ -44,11 +46,18 @@ function WorkoutPage(props) {
     useEffect(() => {
       //cameFromHistory = true;
       if (cameFromHistory) {
+        setUserID(sessionStorage.getItem("user_id"));
+        setWorkoutTitle(window.current_workout);
+        //setDate(window.current_date);
+        console.log("Window current workout: " + window.current_workout);
+        console.log("Window current date: " + window.current_date);
+        console.log("Workout Title: " + workoutTitle);
+        console.log("Current Date: " + date);
         load();
+        
       }
     }, []);
     
-
     const getExerciseCard = exerciseCardObject => {
         return (
             <div>
@@ -61,9 +70,13 @@ function WorkoutPage(props) {
       };
       //handleDelete(exerciseCount-1)
     function load() {
-      var userID = stateUserID;
+      var userID = SessionsUserID;
       var date = stateDate;
       var workoutName = workoutTitle;
+      console.log("LOADING: ");
+      console.log("userID: " + userID);
+      console.log("date: " + date);
+      console.log("workoutName: " + workoutName);
       var httpstring = 'http://localhost:8888/history?user=' + userID +
                       '&date=' + date + '&workname=' + workoutName;
       console.log(httpstring);
@@ -104,7 +117,7 @@ function WorkoutPage(props) {
       var date = stateDate;
       var workoutName = workoutTitle;
       var clearhttp = "http://localhost:8888/clear?user=" + userID + "&date=" + date + "&workname=" + workoutName;
-
+      console.log("Clearhttp: " + clearhttp);
       console.log("userID");
       console.log(userID);
       console.log("date");
@@ -125,6 +138,8 @@ function WorkoutPage(props) {
            //todo implement saving to db
       //console.log(window.data); // window.data contains all the data about all the exercises
       for (var i = 0, l = exerciseArray.length; i < l; i++) {
+        console.log("Trying to save from window data: ");
+        console.log(window.data);
         var title = exerciseArray[i].title;
         var sets = window.data[i][1];
         var reps = window.data[i][2];
@@ -160,7 +175,8 @@ function WorkoutPage(props) {
     };
 
     function handleDelete(id) {
-      console.log("exercise array");
+      console.log("Exercise Count Before Deletion: " + exerciseCount);
+      console.log("Exercise Array Before Deletion: ");
       console.log(exerciseArray);
       setExerciseCount(exerciseCount-1);
       exerciseArray.splice(id, 1);
@@ -168,14 +184,18 @@ function WorkoutPage(props) {
         exerciseArray[i].id -= 1;
       }
       setExerciseArray(exerciseArray);
-      console.log(exerciseArray);
-      console.log(window.data);
+      //console.log(exerciseArray);
+      //console.log(window.data);
       window.ids.splice(id, 1);
       for (let i = id; i < window.ids.length; i++) { // adjust the id #s of the elements after the one deleted
         window.ids[i] -= 1;
       }
       window.data.splice(id, 1);
       console.log(window.data);
+
+      console.log("Exercise Count After Deletion: " + exerciseCount);
+      console.log("Exercise Array After Deletion: ");
+      console.log(exerciseArray);
     };
 
     function addExercise(exerciseType) {
@@ -184,7 +204,7 @@ function WorkoutPage(props) {
         var result = exerciseInfo.find(obj => {
             return obj.title === exerciseType;
           })
-        let data = {title: exerciseType, sets: '0', reps: '0', weight: '0', id: exerciseCount,
+        let data = {title: exerciseType, sets: '0', reps: '0', weight: '0', id: exerciseCount-1,
                     desc: result.description, imageUrl: result.imageUrl};
         exerciseArray.push(data);
         setExerciseArray(exerciseArray);
@@ -196,6 +216,9 @@ function WorkoutPage(props) {
         <Grid item>
           <h1 style = {{}}></h1>
           <Navbar></Navbar>
+          <h1>
+
+          </h1>
           <h1> 
             <Button
             onClick={()=>{save()}}
@@ -287,7 +310,7 @@ function WorkoutPage(props) {
 */
 
 // TODO: change cameFromHistory to false!
-WorkoutPage.defaultProps = { title: "New Workout", date: "03\\11\\2022", count: 0, userID: "1234", cameFromHistory: true }
+WorkoutPage.defaultProps = { title: window.current_workout, date: "03\\11\\2022", count: 0, userID: "1234", cameFromHistory: true }
 export default WorkoutPage
 
 /*<Button
