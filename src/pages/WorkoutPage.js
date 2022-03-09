@@ -9,8 +9,10 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import constants from '../assets/constants.js'
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import { useNavigate } from 'react-router-dom'
 
 function WorkoutPage(props) {
+    const navigate = useNavigate();
     const { title, date, count, userID, cameFromHistory } = props;
     const axios = require('axios');
     
@@ -58,6 +60,10 @@ function WorkoutPage(props) {
       }
     }, []);
     
+    //was in get exercise card
+    /*            <IconButton>
+              <DeleteIcon onClick={() => handleDelete(exerciseCardObject.id)}/>
+            </IconButton>*/
     const getExerciseCard = exerciseCardObject => {
         return (
             <div>
@@ -155,6 +161,7 @@ function WorkoutPage(props) {
         axios.get(httpstring)
         .then(function (response) {
         // handle success
+          navigate("/history");
           console.log(response)
         })
         .catch(function (error) {
@@ -162,12 +169,13 @@ function WorkoutPage(props) {
           console.log(error);
         })
         .then(function () {
+        navigate("/history");
         // always executed
         });
       }
  
       
-      alert(workoutTitle);
+      alert("Saved: " + workoutTitle);
         //todo implement saving to db
       // always executed
       });
@@ -175,6 +183,18 @@ function WorkoutPage(props) {
     };
 
     function handleDelete(id) {
+      /*exerciseArray.pop();
+      setExerciseArray(exerciseArray);
+      window.data.pop();
+      window.ids.pop();
+      setExerciseCount(window.ids.length);
+      console.log("Exercise Count After Deletion: " + exerciseCount);
+      console.log("Exercise Array After Deletion: ");
+      console.log(exerciseArray);
+      console.log("Window data: ");
+      console.log(window.data);
+      console.log("Window ids:");
+      console.log(window.ids);*/
       console.log("Exercise Count Before Deletion: " + exerciseCount);
       console.log("Exercise Array Before Deletion: ");
       console.log(exerciseArray);
@@ -191,6 +211,7 @@ function WorkoutPage(props) {
         window.ids[i] -= 1;
       }
       window.data.splice(id, 1);
+
       console.log(window.data);
 
       console.log("Exercise Count After Deletion: " + exerciseCount);
@@ -204,21 +225,21 @@ function WorkoutPage(props) {
         var result = exerciseInfo.find(obj => {
             return obj.title === exerciseType;
           })
-        let data = {title: exerciseType, sets: '0', reps: '0', weight: '0', id: exerciseCount-1,
+        let data = {title: exerciseType, sets: '0', reps: '0', weight: '0', id: exerciseArray.length/*exerciseCount-1*/,
                     desc: result.description, imageUrl: result.imageUrl};
         exerciseArray.push(data);
         setExerciseArray(exerciseArray);
+        console.log("NEW EXERCISE ARRAY AFTER ADD: ");
+        console.log(exerciseArray);
         //alert(exerciseArray.length);
     };
 
     return (
       <Grid container direction="column">
         <Grid item>
-          <h1 style = {{}}></h1>
+          <h1 style = {{paddingTop: "10px"}}></h1>
           <Navbar></Navbar>
-          <h1>
-
-          </h1>
+          <h1 style = {{paddingTop: "10px"}}></h1>
           <h1> 
             <Button
             onClick={()=>{save()}}
@@ -278,7 +299,7 @@ function WorkoutPage(props) {
         <MenuItem onClick={()=>{handleMenuOptionClick("Pushup")}}>Pushup</MenuItem>
         <MenuItem onClick={()=>{handleMenuOptionClick("Situp")}}>Situp</MenuItem>
         <MenuItem onClick={()=>{handleMenuOptionClick("Squat")}}>Squat</MenuItem>
-        <MenuItem onClick={()=>{handleMenuOptionClick("Bench Press")}}>Bench Press</MenuItem>
+        <MenuItem onClick={()=>{handleMenuOptionClick("Bench-Press")}}>Bench-Press</MenuItem>
         <MenuItem onClick={()=>{handleMenuOptionClick("Deadlift")}}>Deadlift</MenuItem>
       </Menu>
             </h1>
