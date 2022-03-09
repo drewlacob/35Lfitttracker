@@ -202,10 +202,10 @@ function WorkoutPage(props) {
       }*/
       exerciseArray.splice(id, 1);
       console.log("size of exerciseArray post deletion " + exerciseArray.length); // G
-      window.ids.splice(id, 1);
+      /*window.ids.splice(id, 1);
       for (let i = id; i < window.ids.length; i++) { // adjust the id #s of the elements after the one deleted
         window.ids[i] -= 1;
-      }
+      }*/
       for (let i = id; i < exerciseArray.length; i++) { // adjust the id #s of the elements after the one deleted
         exerciseArray[i].id -= 1;
         //console.log("adjusting exerciseArray " + i);   G
@@ -238,7 +238,7 @@ function WorkoutPage(props) {
     return (
       <Grid container direction="column">
         <Grid item>
-          <h1 style = {{paddingTop: "10px"}}></h1>
+        <h1 style = {{paddingTop: "10px"}}></h1>
           <Navbar></Navbar>
           <h1 style = {{paddingTop: "10px"}}></h1>
           <h1> 
