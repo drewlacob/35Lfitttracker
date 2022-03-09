@@ -45,7 +45,7 @@ const handleLogin = (response) => {
     .then(function (response) {
         console.log(response);
     })
-    window.location.href = "http://localhost:3000/workouts";
+    window.location.href = "http://localhost:3000/history";
     return;
  
 }
