@@ -71,7 +71,7 @@ function Navbar() {
             <Link to="/workouts">
               <AddIcon/>
             </Link>
-            <Link to="/history" onClick={() => { window.fromhist = 1; window.open("http://localhost:3000/history") }} >
+            <Link to="/history" onClick={() => { window.fromhist = 1; window.open("http://localhost:3000/history","_self") }} >
               <HistoryIcon/>
             </Link>
           </div>
