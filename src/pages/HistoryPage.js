@@ -33,6 +33,11 @@ var yolo;
 
 export default function HistoryPage() {
 // Make a request for a user with a given ID
+window.fromHistory = 1;
+if(window.fromhist === 1){
+  window.fromhist = 0;
+    window.location.reload();
+  }
 function updateFromHistory(input)
 {
   window.current_workout = input
@@ -46,6 +51,7 @@ var workoutText = window.result.split(/(\s+)/);
 var parsedWorkouts = [];
 var parsedDates = [];
 console.log(workoutText)
+
 var currentDate = "";
 for(var i = 0; i < workoutText.length; i++)
 {
@@ -115,9 +121,21 @@ const [secondary, setSecondary] = React.useState(true);
 console.log("numwork:");
 console.log(numWorkouts.length);
 if(numWorkouts.length === 1){
+  if(workoutText.length === 3 && workoutText[0].match("Error") && workoutText[1].match("\n")){
+    return (
+    
+      <Box sx={{ flexGrow: 1}}>
+      <h1 style = {{paddingTop:"10px"}}></h1>
+      <NavBar></NavBar>
+      <h1 style = {{paddingTop:"10px"}}></h1>
+      <div>No workouts yet! Add a workout to view your history</div>
+    </Box>);
+  }
   return (
     <Box sx={{ flexGrow: 1}}>
+       <h1 style = {{paddingTop:"10px"}}></h1>
       <NavBar></NavBar>
+      <h1 style = {{paddingTop:"10px"}}></h1>
             <List dense={dense} sx={{ width: '200%', maxWidth: 360, bgcolor: 'background.blue'}}>
               
                 <ListItem
@@ -139,7 +157,9 @@ if(numWorkouts.length === 1){
 else if(numWorkouts.length === 2){
   return (
     <Box sx={{ flexGrow: 1}}>
-    <NavBar></NavBar>
+    <h1 style = {{paddingTop:"10px"}}></h1>
+      <NavBar></NavBar>
+      <h1 style = {{paddingTop:"10px"}}></h1>
           <List dense={dense} sx={{ width: '200%', maxWidth: 360, bgcolor: 'background.blue'}}>
             
               <ListItem
@@ -172,10 +192,65 @@ else if(numWorkouts.length === 2){
   </Box>
   );
 }
+else if(numWorkouts.length === 3){
+  return (
+    <Box sx={{ flexGrow: 1}}>
+    <NavBar></NavBar>
+    <h1 style = {{paddingTop:"10px"}}></h1>
+      <NavBar></NavBar>
+      <h1 style = {{paddingTop:"10px"}}></h1>
+          <List dense={dense} sx={{ width: '200%', maxWidth: 360, bgcolor: 'background.blue'}}>
+            
+              <ListItem
+                secondaryAction={
+                  <Button onClick={() => { updateDFromHistory(getCurDate(0)); updateFromHistory(getWorkoutName(0)); navigate("/workouts") }} variant="contained" endIcon={<PlayCircleFilledWhiteIcon />}>
+                  Start
+                  </Button>
+                }
+              >
+                <ListItemText
+                  primary= {getWorkoutName(0)}
+                  secondary={getCurDate(0)}
+                />
+              </ListItem>
+              <ListItem
+                secondaryAction={
+                  <Button onClick={() => { updateDFromHistory(getCurDate(1)); updateFromHistory(getWorkoutName(1)); navigate("/workouts") }} variant="contained" endIcon={<PlayCircleFilledWhiteIcon />}>
+                  Start
+                  </Button>
+                }
+              >
+                <ListItemText
+                  primary= {getWorkoutName(1)}
+                  secondary={getCurDate(1)}
+                  
+                />
+              </ListItem>
+              <ListItem
+                secondaryAction={
+                  <Button onClick={() => { updateDFromHistory(getCurDate(2)); updateFromHistory(getWorkoutName(2)); navigate("/workouts") }} variant="contained" endIcon={<PlayCircleFilledWhiteIcon />}>
+                  Start
+                  </Button>
+                }
+              >
+                <ListItemText
+                  primary= {getWorkoutName(2)}
+                  secondary={getCurDate(2)}
+                  
+                />
+              </ListItem>
+             
+          </List>
+  </Box>
+  );
+}
 else if(numWorkouts.length === 4){
   return (
     <Box sx={{ flexGrow: 1}}>
     <NavBar></NavBar>
+    <h1 style = {{paddingTop:"10px"}}></h1>
+      <NavBar></NavBar>
+      <h1 style = {{paddingTop:"10px"}}></h1>
           <List dense={dense} sx={{ width: '200%', maxWidth: 360, bgcolor: 'background.blue'}}>
             
               <ListItem
@@ -237,6 +312,9 @@ else if(numWorkouts.length === 5){
   return (
     <Box sx={{ flexGrow: 1}}>
     <NavBar></NavBar>
+    <h1 style = {{paddingTop:"10px"}}></h1>
+      <NavBar></NavBar>
+      <h1 style = {{paddingTop:"10px"}}></h1>
           <List dense={dense} sx={{ width: '200%', maxWidth: 360, bgcolor: 'background.blue'}}>
             
               <ListItem
@@ -311,6 +389,9 @@ if(numWorkouts.length === 6){
   return (
     <Box sx={{ flexGrow: 1}}>
     <NavBar></NavBar>
+    <h1 style = {{paddingTop:"10px"}}></h1>
+      <NavBar></NavBar>
+      <h1 style = {{paddingTop:"10px"}}></h1>
           <List dense={dense} sx={{ width: '200%', maxWidth: 360, bgcolor: 'background.blue'}}>
             
               <ListItem
@@ -398,6 +479,9 @@ else if(numWorkouts.length === 7){
   return (
     <Box sx={{ flexGrow: 1}}>
     <NavBar></NavBar>
+    <h1 style = {{paddingTop:"10px"}}></h1>
+      <NavBar></NavBar>
+      <h1 style = {{paddingTop:"10px"}}></h1>
           <List dense={dense} sx={{ width: '200%', maxWidth: 360, bgcolor: 'background.blue'}}>
             
               <ListItem
@@ -497,6 +581,9 @@ else if(numWorkouts.length === 8){
   return (
     <Box sx={{ flexGrow: 1}}>
     <NavBar></NavBar>
+    <h1 style = {{paddingTop:"10px"}}></h1>
+      <NavBar></NavBar>
+      <h1 style = {{paddingTop:"10px"}}></h1>
           <List dense={dense} sx={{ width: '200%', maxWidth: 360, bgcolor: 'background.blue'}}>
             
               <ListItem
@@ -609,6 +696,9 @@ else if(numWorkouts.length === 9){
   return (
     <Box sx={{ flexGrow: 1}}>
     <NavBar></NavBar>
+    <h1 style = {{paddingTop:"10px"}}></h1>
+      <NavBar></NavBar>
+      <h1 style = {{paddingTop:"10px"}}></h1>
           <List dense={dense} sx={{ width: '200%', maxWidth: 360, bgcolor: 'background.blue'}}>
             
               <ListItem
@@ -734,6 +824,9 @@ else if(numWorkouts.length === 10){
   return (
     <Box sx={{ flexGrow: 1}}>
       <NavBar></NavBar>
+      <h1 style = {{paddingTop:"10px"}}></h1>
+      <NavBar></NavBar>
+      <h1 style = {{paddingTop:"10px"}}></h1>
             <List dense={dense} sx={{ width: '200%', maxWidth: 360, bgcolor: 'background.blue'}}>
               
                 <ListItem
@@ -869,5 +962,5 @@ else if(numWorkouts.length === 10){
 }
 else{
   console.log("i ran awwww");
-  return <div>NOPE</div>;
+  return <div>Whoops, something went wrong :(</div>;
 }}
