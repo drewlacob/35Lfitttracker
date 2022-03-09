@@ -9,7 +9,11 @@ import {
   Button
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import { useNavigate } from 'react-router-dom'
 import HistoryIcon from "@mui/icons-material/History";
+let name = sessionStorage.getItem("user_name");
+const axios = require('axios');
+
 
 /*const useStyles = makeStyles((theme) => ({
   navbar: {
@@ -32,6 +36,25 @@ import HistoryIcon from "@mui/icons-material/History";
 }));*/
 
 function Navbar() {
+  const navigate = useNavigate();
+  function updateHistory(){
+    let UID = sessionStorage.getItem("user_id");
+    axios.get('http://localhost:8888/allHist?user=' + UID)
+            .then(function (response) {
+      // handle success
+               window.result = response.data;
+               console.log("Just got it");
+               console.log(window.result);
+             })
+             .catch(function (error) {
+      // handle error
+               console.log(error);
+            })
+            .then(function () {
+          // always executed
+           });
+          
+  }
   //const classes = useStyles();
 
   function newWorkout() {
@@ -42,13 +65,13 @@ function Navbar() {
     <AppBar>
       <Toolbar>
         <Typography> 
-          Name
+          {name}
         </Typography>
           <div>
             <Link to="/workouts">
               <AddIcon/>
             </Link>
-            <Link to="/history">
+            <Link to="/history" onClick={() => { window.fromhist = 1; window.open("http://localhost:3000/history") }} >
               <HistoryIcon/>
             </Link>
           </div>
