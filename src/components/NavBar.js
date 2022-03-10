@@ -64,21 +64,26 @@ function Navbar() {
 
   return (
     <AppBar>
-      <Toolbar>
-        <Typography> 
+      <Toolbar style={{ background: '#5795DE' }}>
+        <Typography style={{fontFamily: "copperplate"}}> 
           {name}
         </Typography>
           <div>
             <Link to="/workouts" onClick={() => { window.current_workout = ""; window.open("http://localhost:3000/workouts","_self") }}>
-              <AddIcon/>
+              <AddIcon style={{ paddingRight: "15px", paddingLeft: "15px"}}/>
             </Link>
             <Link to="/history" onClick={() => { window.fromhist = 1; window.open("http://localhost:3000/history","_self") }} >
-              <HistoryIcon/>
+              <HistoryIcon style={{ paddingRight: "15px", paddingLeft: "15px"}}/>
             </Link>
-            <Link to="/login" onClick={() => { sessionStorage.clear(); window.open("http://localhost:3000/login", "_self")}} >
-              <LogoutIcon/>
+            <Link style={{float: 'right'}} to="/login" align="right" onClick={() => { sessionStorage.clear(); window.open("http://localhost:3000/login", "_self")}} >
+              <LogoutIcon style={{ paddingRight: "15px", paddingLeft: "15px"}}/>
             </Link>
           </div>
+          {/* <View style={{ display:'flex',  flexDirection:"row", justifyContent:'center', alignItems:'center'}}>
+          <text style={{ display:'flex',  flexDirection:"row", justifyContent:'center', alignItems:'center'}}> 
+          FITTRACKER
+        </text>
+        </View> */}
       </Toolbar>
     </AppBar>
   );
