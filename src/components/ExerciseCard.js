@@ -14,32 +14,40 @@ import Input from '@material-ui/core/Input';
 import ReactDOM from 'react-dom'
 import WorkoutPage from '../pages/WorkoutPage'
 import { ContactSupportOutlined } from '@material-ui/icons';
+import { useState, useEffect } from 'react';
 
 //window.ids = [];
 window.data = [[]];
+window.cameFromDelete = 0;
 
 const ExerciseCard = props => {
   const { imageUrl, title, desc, sets, reps, weight, id } = props;
 
   console.log(props.id);
   
-  /*var add = true;
-  for (let i = 0; i < window.ids.length; i++) {
-    if (window.ids[i] == props.title)
+  var add = true;
+  for (let i = 0; i < window.data.length; i++) {
+    if (window.data[i][0] == props.title && window.cameFromDelete === 0){
       add = false;
+      console.log("Resetting Props as: " + props.sets + " " + props.reps + " " + props.weight);
+      //setStateSets(props.sets);
+      //setStateReps(props.reps);
+      //setStateWeight(props.weight);
+    }
   }
   if (add) {
      console.log("Adding id " + props.id + " " + props.title + " " + props.sets + " " + props.reps + " " + props.weight);
-     window.ids.push(props.id);
      window.data[props.id] = [props.title, props.sets, props.reps, props.weight]; // initialize the sets, reps, and weight to 0's
-  }*/
-  window.data[props.id] = [props.title, props.sets, props.reps, props.weight];
-  console.log("data at props id" + window.data[props.id]);
+  }
+  //window.data[props.id] = [props.title, props.sets, props.reps, props.weight];
+  //window.data[props.id] = [props.title, 0, 0, 0];
+  console.log("data at props id " + props.id + ": "+ window.data[props.id]);
   /*for (let i = 0; i < window.ids.length; i++) {
     if (window.data[i][1] == props.sets) {
 
     }
   }*/
+
 
   function handleChange(event, field)  {
     console.log("props id");
@@ -87,25 +95,28 @@ const ExerciseCard = props => {
         id="sets"
         label="Sets"
         InputLabelProps={{ shrink: true }}
-        defaultValue={sets}
+        defaultValue= {props.sets}
         onChange={(e) => handleChange(e, 0)}
         type="number"
+        //value={props.sets}//{stateSets}
       />
         <TextField
         id="reps"
         label="Reps"
         InputLabelProps={{ shrink: true }}
-        defaultValue={reps}
+        defaultValue={props.reps}
         onChange={(e) => handleChange(e, 1)}
         type="number"
+        //value={props.reps}//{stateReps}
       />
         <TextField
         id="weight"
         label="Weight"
         InputLabelProps={{ shrink: true }}
-        defaultValue={weight}
+        defaultValue={props.weight}
         onChange={(e) => handleChange(e, 2)}
         type="number"
+        //value={props.weight}//{stateWeight}
       />
       </CardActions>
     </Card>

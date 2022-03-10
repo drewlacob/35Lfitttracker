@@ -50,7 +50,7 @@ function WorkoutPage(props) {
       //cameFromHistory = true;
       if (window.fromHistory === 1) {
 
-        setDate(window.current_date);
+        //setDate(window.current_date);
         load();
       
       }
@@ -62,6 +62,7 @@ function WorkoutPage(props) {
             </IconButton>*/
     const getExerciseCard = exerciseCardObject => {
       console.log("getting exercise card");
+
         return (
             <div>
             <ExerciseCard {...exerciseCardObject} />
@@ -207,6 +208,8 @@ function WorkoutPage(props) {
     };
 
     function handleDelete(id) {
+      console.log("Exercise array pre deletion: " );
+      console.log(exerciseArray);
       console.log("deleting index " + id); //  G
       console.log("size of exerciseArray pre deletion " + exerciseArray.length); // G
       
@@ -222,8 +225,8 @@ function WorkoutPage(props) {
       for (let i = id; i < window.ids.length; i++) { // adjust the id #s of the elements after the one deleted
         window.ids[i] -= 1;
       }*/
-      /*for (let i = id; i < exerciseArray.length; i++) { // adjust the id #s of the elements after the one deleted
-        exerciseArray[i].id -= 1;*/
+      for (let i = id; i < exerciseArray.length; i++) { // adjust the id #s of the elements after the one deleted
+        exerciseArray[i].id -= 1;}
         //console.log("adjusting exerciseArray " + i);   G
       //}
       setExerciseArray(exerciseArray);
@@ -239,10 +242,18 @@ function WorkoutPage(props) {
       setExerciseCount(exerciseArray.length);
       setExerciseArray(exerciseArray);
       console.log("ExerciseCount post deletion: " + exerciseCount);
+      console.log("NEW WINDOW DATA AFTER DELEATE: ");
+      console.log(window.data);
       //setAnchorEl(null);
       //console.log("Window data post deletion\n" + window.data);   G
     };
-
+    //NOTE TO SELF
+    //NEW WORKOUT BUG
+    //WHEN MAKING NEW WORKOUT
+    //ADD EX
+    //SET VALS for first ex
+    //ad second ex
+    //first ex values get zerod??
     function addExercise(exerciseType) {
         console.log(exerciseType + exerciseType.length);
         //setExerciseCount(exerciseCount + 1);
@@ -258,6 +269,8 @@ function WorkoutPage(props) {
         console.log("NEW EXERCISE ARRAY AFTER ADD: ");
         console.log(exerciseArray);
         console.log("Exericse Count AFTER ADD: " + exerciseCount);
+        console.log("NEW WINDOW DATA AFTER ADD: ");
+        console.log(window.data);
         //alert(exerciseArray.length);
     };
 
