@@ -31,13 +31,7 @@ const ExerciseCard = props => {
   if (add) {
      console.log("Adding id " + props.id + " " + props.title + " " + props.sets + " " + props.reps + " " + props.weight);
      window.ids.push(props.id);
-     console.log("Added to window ids: ID #: " + props.id);
      window.data[props.id] = [props.title, props.sets, props.reps, props.weight]; // initialize the sets, reps, and weight to 0's
-<<<<<<< HEAD
-     console.log("Initialized window data exercise: ");
-     console.log(window.data[props.id]);
-  }
-=======
   }*/
   window.data[props.id] = [props.title, props.sets, props.reps, props.weight];
   console.log("data at props id" + window.data[props.id]);
@@ -46,25 +40,24 @@ const ExerciseCard = props => {
 
     }
   }*/
->>>>>>> 6557fe464e61155b0a6f9c1e348a9956ee4290c4
 
   function handleChange(event, field)  {
     console.log("props id");
     console.log(props.id);
     switch(field) {
       case 0:
+        //console.log(props.sets);
+        //console.log("props id");
+        //console.log(props.id);
         window.data[props.id][1] = event.target.value;
-        console.log("Changed sets to: " + window.data[props.id][1]);
         break;
       case 1:
         window.reps = event.target.value;
         window.data[props.id][2] = event.target.value;
-        console.log("Changed reps to: " + window.data[props.id][2]);
         break;
       case 2:
         window.weights = event.target.value;
         window.data[props.id][3] = event.target.value;
-        console.log("Changed weight to: " + window.data[props.id][3]);
         break;
       default:
         break;

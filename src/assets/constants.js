@@ -29,7 +29,7 @@ export default [
         "https://s3.amazonaws.com/prod.skimble/assets/2288729/image_iphone.jpg"
       },
       {
-        title: "Bench-Press",
+        title: "Bench Press",
         description:
         "The bench press, or chest press, is an upper-body weight training exercise in which the trainee presses a weight upwards while lying on a weight training bench.",
         imageUrl:

@@ -27,19 +27,11 @@ function WorkoutPage(props) {
     const [exerciseArray, setExerciseArray] = useState(initialArray);
     const [exerciseCount, setExerciseCount] = useState(0);
     const [workoutTitle, setWorkoutTitle] = useState(window.current_workout);
-<<<<<<< HEAD
-    const [stateUserID, setUserID] = useState(props.userID);
-    const [stateDate, setDate] = useState(props.date);
-    let SessionsUserID = sessionStorage.getItem("user_id");
-    console.log(SessionsUserID);
-    //setUserID(sessionStorage.getItem("user_id"));
-=======
     const [stateUserID, setUserID] = useState(sessionStorage.getItem("user_id"));
-    const [stateDate, setDate] = useState(d.getMonth() + "\\" + d.getDate() + "\\" + d.getFullYear());
+    const [stateDate, setDate] = useState((d.getMonth()+1) + "\\" + (d.getDate()+1) + "\\" + d.getFullYear());
 
     //console.log("Date");
 
->>>>>>> 6557fe464e61155b0a6f9c1e348a9956ee4290c4
     //dropdown button
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
@@ -56,20 +48,9 @@ function WorkoutPage(props) {
 
     useEffect(() => {
       //cameFromHistory = true;
-<<<<<<< HEAD
-      if (cameFromHistory) {
-        setUserID(sessionStorage.getItem("user_id"));
-        setWorkoutTitle(window.current_workout);
-        //setDate(window.current_date);
-        console.log("Window current workout: " + window.current_workout);
-        console.log("Window current date: " + window.current_date);
-        console.log("Workout Title: " + workoutTitle);
-        console.log("Current Date: " + date);
-=======
       if (window.fromHistory === 1) {
->>>>>>> 9b833dea410fe914ec14de4644472f77fa870474
         load();
-        
+      
       }
     }, []);
     
@@ -83,20 +64,16 @@ function WorkoutPage(props) {
             <div>
             <ExerciseCard {...exerciseCardObject} />
             <IconButton>
-              <DeleteIcon onClick={() => handleDelete(exerciseCardObject.id)}/>
+              <DeleteIcon id="delete" onClick={() => handleDelete(exerciseCardObject.id)}/>
             </IconButton>
             </div>
         );
       };
       //handleDelete(exerciseCount-1)
     function load() {
-<<<<<<< HEAD
-      var userID = SessionsUserID;
-=======
       var userID = stateUserID;
       console.log(sessionStorage.getItem("user_id"));
       console.log("userid" + userID);
->>>>>>> 6557fe464e61155b0a6f9c1e348a9956ee4290c4
       var date = stateDate;
       var workoutName = workoutTitle;
       console.log("LOADING: ");
@@ -150,6 +127,7 @@ function WorkoutPage(props) {
         //console.log("Pushing data:" + data);
         exerciseArray.push(data);
         setExerciseArray(exerciseArray);
+        setExerciseCount(exerciseArray.length);
       }
       console.log(exerciseArray);
       console.log(exerciseArray.length);
@@ -228,24 +206,6 @@ function WorkoutPage(props) {
     };
 
     function handleDelete(id) {
-<<<<<<< HEAD
-      /*exerciseArray.pop();
-      setExerciseArray(exerciseArray);
-      window.data.pop();
-      window.ids.pop();
-      setExerciseCount(window.ids.length);
-      console.log("Exercise Count After Deletion: " + exerciseCount);
-      console.log("Exercise Array After Deletion: ");
-      console.log(exerciseArray);
-      console.log("Window data: ");
-      console.log(window.data);
-      console.log("Window ids:");
-      console.log(window.ids);*/
-      console.log("Exercise Count Before Deletion: " + exerciseCount);
-      console.log("Exercise Array Before Deletion: ");
-      console.log(exerciseArray);
-      setExerciseCount(exerciseCount-1);
-=======
       console.log("deleting index " + id); //  G
       console.log("size of exerciseArray pre deletion " + exerciseArray.length); // G
       
@@ -255,33 +215,17 @@ function WorkoutPage(props) {
         console.log("id: " + exerciseArray[i].id); //stored as character!   // for loop G
         console.log("sets: " + exerciseArray[i].sets);
       }*/
->>>>>>> 6557fe464e61155b0a6f9c1e348a9956ee4290c4
       exerciseArray.splice(id, 1);
       console.log("size of exerciseArray post deletion " + exerciseArray.length); // G
       /*window.ids.splice(id, 1);
       for (let i = id; i < window.ids.length; i++) { // adjust the id #s of the elements after the one deleted
         window.ids[i] -= 1;
       }*/
-      for (let i = id; i < exerciseArray.length; i++) { // adjust the id #s of the elements after the one deleted
-        exerciseArray[i].id -= 1;
+      /*for (let i = id; i < exerciseArray.length; i++) { // adjust the id #s of the elements after the one deleted
+        exerciseArray[i].id -= 1;*/
         //console.log("adjusting exerciseArray " + i);   G
-      }
+      //}
       setExerciseArray(exerciseArray);
-<<<<<<< HEAD
-      //console.log(exerciseArray);
-      //console.log(window.data);
-      window.ids.splice(id, 1);
-      for (let i = id; i < window.ids.length; i++) { // adjust the id #s of the elements after the one deleted
-        window.ids[i] -= 1;
-      }
-      window.data.splice(id, 1);
-
-      console.log(window.data);
-
-      console.log("Exercise Count After Deletion: " + exerciseCount);
-      console.log("Exercise Array After Deletion: ");
-      console.log(exerciseArray);
-=======
       //console.log("exerciseArray indexes after deletion");    G
       /*for (let i = 0; i < exerciseArray.length; i++) {
         console.log("id: " + exerciseArray[i].id); //stored as character!     // for loop G
@@ -289,8 +233,13 @@ function WorkoutPage(props) {
       }*/
       //console.log("Window data pre deletion\n" + window.data);   G
       window.data.splice(id, 1);
+      console.log("Exercise array post deletion: " );
+      console.log(exerciseArray);
+      setExerciseCount(exerciseArray.length);
+      setExerciseArray(exerciseArray);
+      console.log("ExerciseCount post deletion: " + exerciseCount);
+      //setAnchorEl(null);
       //console.log("Window data post deletion\n" + window.data);   G
->>>>>>> 6557fe464e61155b0a6f9c1e348a9956ee4290c4
     };
 
     function addExercise(exerciseType) {
@@ -300,27 +249,21 @@ function WorkoutPage(props) {
         var result = exerciseInfo.find(obj => {
             return obj.title === exerciseType;
           })
-<<<<<<< HEAD
-        let data = {title: exerciseType, sets: '0', reps: '0', weight: '0', id: exerciseArray.length/*exerciseCount-1*/,
-=======
         let data = {title: exerciseType, sets: '0', reps: '0', weight: '0', id: exerciseArray.length, //exerciseCount,
->>>>>>> 6557fe464e61155b0a6f9c1e348a9956ee4290c4
                     desc: result.description, imageUrl: result.imageUrl};
         exerciseArray.push(data);
         setExerciseArray(exerciseArray);
+        setExerciseCount(exerciseArray.length);
         console.log("NEW EXERCISE ARRAY AFTER ADD: ");
         console.log(exerciseArray);
+        console.log("Exericse Count AFTER ADD: " + exerciseCount);
         //alert(exerciseArray.length);
     };
 
     return (
       <Grid container direction="column">
         <Grid item>
-<<<<<<< HEAD
-          <h1 style = {{paddingTop: "10px"}}></h1>
-=======
         <h1 style = {{paddingTop: "10px"}}></h1>
->>>>>>> 6557fe464e61155b0a6f9c1e348a9956ee4290c4
           <Navbar></Navbar>
           <h1 style = {{paddingTop: "10px"}}></h1>
           <h1> 
@@ -382,7 +325,7 @@ function WorkoutPage(props) {
         <MenuItem onClick={()=>{handleMenuOptionClick("Pushup")}}>Pushup</MenuItem>
         <MenuItem onClick={()=>{handleMenuOptionClick("Situp")}}>Situp</MenuItem>
         <MenuItem onClick={()=>{handleMenuOptionClick("Squat")}}>Squat</MenuItem>
-        <MenuItem onClick={()=>{handleMenuOptionClick("Bench-Press")}}>Bench-Press</MenuItem>
+        <MenuItem onClick={()=>{handleMenuOptionClick("Bench Press")}}>Bench Press</MenuItem>
         <MenuItem onClick={()=>{handleMenuOptionClick("Deadlift")}}>Deadlift</MenuItem>
       </Menu>
             </h1>
@@ -414,11 +357,7 @@ function WorkoutPage(props) {
 */
 
 // TODO: change cameFromHistory to false!
-<<<<<<< HEAD
-WorkoutPage.defaultProps = { title: window.current_workout, date: "03\\11\\2022", count: 0, userID: "1234", cameFromHistory: true }
-=======
 WorkoutPage.defaultProps = { title: "NewWorkout", date: "03\\11\\2022", count: 0, userID: "1234", cameFromHistory: true }
->>>>>>> 6557fe464e61155b0a6f9c1e348a9956ee4290c4
 export default WorkoutPage
 
 /*<Button
