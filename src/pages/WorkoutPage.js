@@ -50,7 +50,7 @@ function WorkoutPage(props) {
       //cameFromHistory = true;
       if (window.fromHistory === 1) {
 
-        //setDate(window.current_date);
+        setDate(window.current_date);
         load();
       
       }
@@ -77,7 +77,7 @@ function WorkoutPage(props) {
       var userID = stateUserID;
       console.log(sessionStorage.getItem("user_id"));
       console.log("userid" + userID);
-      var date = stateDate;
+      var date = window.current_date;
       var workoutName = workoutTitle;
       console.log("LOADING: ");
       console.log("userID: " + userID);
