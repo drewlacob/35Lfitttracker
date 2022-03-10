@@ -284,7 +284,8 @@ function WorkoutPage(props) {
             <Button
             onClick={()=>{save()}}
             style = {{color: "white",
-                     background:"green",
+                      background: '#5795DE',
+                      fontFamily: "copperplate"
                     }}>
             Save Workout 
             </Button><span> {'   '} </span>
@@ -294,6 +295,8 @@ function WorkoutPage(props) {
         type='text'
         defaultValue = {workoutTitle}
         style = {{
+            backgroundColor: '#5795DE',
+            fontFamily: "copperplate",
             height: "52px",
             fontColor: "white",
             padding: "0px 16px",
@@ -303,7 +306,6 @@ function WorkoutPage(props) {
             fontSize: "16px",
             fontWeight: "400",
             lineHeight: "normal",
-            backgroundColor: "green",
             color: "white",
             outline: "none",
             boxShadow: "0px 4px 20px 0px transparent",
@@ -320,8 +322,9 @@ function WorkoutPage(props) {
         aria-expanded={open ? 'true' : undefined}
         onClick={handleMenuClick}
         style = {{color: "white",
-                     background:"green",
-                }}
+                      background: '#5795DE',
+                      fontFamily: "copperplate"
+                    }}
       >
         Add Exercise
       </Button>
