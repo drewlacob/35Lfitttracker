@@ -68,7 +68,7 @@ function Navbar() {
           {name}
         </Typography>
           <div>
-            <Link to="/workouts">
+            <Link to="/workouts" onClick={() => { window.current_workout = ""; window.open("http://localhost:3000/workouts","_self") }}>
               <AddIcon/>
             </Link>
             <Link to="/history" onClick={() => { window.fromhist = 1; window.open("http://localhost:3000/history","_self") }} >

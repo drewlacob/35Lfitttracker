@@ -14,22 +14,7 @@ console.log(name)
 window.fromhist = 0;
 //import { Switch, Link, Redirect } from 'react-router-dom';
 const axios = require('axios');
-function renderMyData(){
-axios.get('http://localhost:8888/allHist?user=' + UID)
-          .then(function (response) {
-    // handle success
-             window.result = response.data;
-             console.log("Just got it")
-             console.log(window.result)
-           })
-           .catch(function (error) {
-    // handle error
-             console.log(error);
-          })
-          .then(function () {
-        // always executed
-         });
-        }
+
 
 
 class App extends Component {
@@ -38,26 +23,45 @@ class App extends Component {
 
     this.state = {
       result : null,
-      done : false
+      HistDone : false,
+      WorkDone : false
     };
   }
 
   componentDidMount() {
 
-   this.renderMyData();
+   this.renderHistData();
+   this.renderWorkoutData();
    console.log("running set");
    setTimeout(() => {
     this.setState((state) =>
     { 
-     return {result : window.result, done : true}
+     return {result : window.result, HistDone : true, WorkDone : true}
      
    })
    }, 100);
 }
 
+renderWorkoutData(){
+  console.log("running comp")
+  var userID = sessionStorage.getItem("user_id")
+  var date = window.current_date;
+  var workoutName = window.current_workout;
+  var httpstring = 'http://localhost:8888/history?user=' + userID +
+                      '&date=' + date + '&workname=' + workoutName;
+      axios.get(httpstring)
+      .then(function (response) {
+      // handle success
+          // TODO: clean up this code, one of these methods should work (need to decide if we enter for loop if response is "error")
+        if (response.data === "Error\n") {
+          return;
+        }
+        window.WorkoutData = response.data;
+          })
+        }
+        
 
-
-renderMyData(){
+renderHistData(){
   console.log("running comp")
   UID = sessionStorage.getItem("user_id")
   axios.get('http://localhost:8888/allHist?user=' + UID)
@@ -86,8 +90,8 @@ renderMyData(){
               <Routes>
                 <Route path="" element={<LoginPage />} />
                 <Route path="/login" element={<LoginPage />} />
-                <Route path="/workouts" element={<WorkoutPage />} />
-                <Route path="/history" element={this.state.done ? <HistoryPage /> : <div> LOADING </div>} />
+                <Route path="/workouts" element={this.state.WorkDone ? <WorkoutPage /> : <div>LOADING</div>} />
+                <Route path="/history" element={this.state.HistDone ? <HistoryPage /> : <div> LOADING </div>} />
               </Routes>
             </Router>
           </header> 

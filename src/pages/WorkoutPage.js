@@ -68,7 +68,7 @@ function WorkoutPage(props) {
       var userID = stateUserID;
       console.log(sessionStorage.getItem("user_id"));
       console.log("userid" + userID);
-      var date = stateDate;
+      var date = window.current_date;
       var workoutName = workoutTitle;
       var httpstring = 'http://localhost:8888/history?user=' + userID +
                       '&date=' + date + '&workname=' + workoutName;
