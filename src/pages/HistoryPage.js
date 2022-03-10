@@ -33,6 +33,7 @@ var yolo;
 
 export default function HistoryPage() {
 // Make a request for a user with a given ID
+window.fromHistory = 1;
 if(window.fromhist === 1){
   window.fromhist = 0;
     window.location.reload();
@@ -52,30 +53,34 @@ var parsedDates = [];
 console.log(workoutText)
 
 var currentDate = "";
-for(var i = 0; i < workoutText.length; i++)
+var increm = 0
+while(increm < workoutText.length && parsedWorkouts.length <= 9)
 {
-
-  if(workoutText[i].match(/[0-9]{1,2}\\[0-9]{1,2}\\2022/)){
+  console.log("parsed length:")
+  console.log(parsedWorkouts.length)
+  if(workoutText[increm].match(/[0-9]{1,2}\\[0-9]{1,2}\\2022/)){
     console.log("captured date:");
-    console.log(workoutText[i]);
-    currentDate = workoutText[i];
+    console.log(workoutText[increm]);
+    currentDate = workoutText[increm];
   }
   console.log("i is")
-  console.log(i)
-  if(workoutText[i].match(/^(?!.*(([0-9]{1,2}\\[0-9]{1,2}\\2022))).*/))
+  console.log(increm)
+  if(workoutText[increm].match(/^(?!.*(([0-9]{1,2}\\[0-9]{1,2}\\2022))).*/))
     {
-      if(workoutText[i].match(/[^ ]/)){
-        if(workoutText[i].match(/^[^\n ]*$/)){
+      if(workoutText[increm].match(/[^ ]/)){
+        if(workoutText[increm].match(/^[^\n ]*$/)){
           console.log("length")
-          console.log(parsedWorkouts.push(workoutText[i]));
+          console.log(parsedWorkouts.push(workoutText[increm]));
           console.log("pushing current date")
           console.log(currentDate)
           console.log(parsedDates.push(currentDate));
-          console.log(i);
+          console.log(increm);
         }
 }
 }
+increm++;
 }
+
 console.log(parsedWorkouts)
 var workoutNum = 0;
     function getWorkoutName(input){
@@ -119,66 +124,23 @@ const [dense, setDense] = React.useState(false);
 const [secondary, setSecondary] = React.useState(true);
 console.log("numwork:");
 console.log(numWorkouts.length);
+
 if(numWorkouts.length === 1){
   if(workoutText.length === 3 && workoutText[0].match("Error") && workoutText[1].match("\n")){
     return (
     
       <Box sx={{ flexGrow: 1}}>
+      <h1 style = {{paddingTop:"10px"}}></h1>
       <NavBar></NavBar>
-      <div>"
-
-
-
-
-
-
-        "
-      </div>
-      <div>"
-
-
-
-
-
-
-        "
-      </div>
+      <h1 style = {{paddingTop:"10px"}}></h1>
       <div>No workouts yet! Add a workout to view your history</div>
     </Box>);
   }
   return (
     <Box sx={{ flexGrow: 1}}>
+       <h1 style = {{paddingTop:"10px"}}></h1>
       <NavBar></NavBar>
-      <div>
-"
-
-
-
-
-
-
-
-
-
-
-
-"
-      </div>
-      <div>
-"
-
-
-
-
-
-
-
-
-
-
-
-"
-      </div>
+      <h1 style = {{paddingTop:"10px"}}></h1>
             <List dense={dense} sx={{ width: '200%', maxWidth: 360, bgcolor: 'background.blue'}}>
               
                 <ListItem
@@ -200,37 +162,9 @@ if(numWorkouts.length === 1){
 else if(numWorkouts.length === 2){
   return (
     <Box sx={{ flexGrow: 1}}>
-    <NavBar></NavBar>
-    <div>
-"
-
-
-
-
-
-
-
-
-
-
-
-"
-      </div>
-      <div>
-"
-
-
-
-
-
-
-
-
-
-
-
-"
-      </div>
+    <h1 style = {{paddingTop:"10px"}}></h1>
+      <NavBar></NavBar>
+      <h1 style = {{paddingTop:"10px"}}></h1>
           <List dense={dense} sx={{ width: '200%', maxWidth: 360, bgcolor: 'background.blue'}}>
             
               <ListItem
@@ -267,36 +201,9 @@ else if(numWorkouts.length === 3){
   return (
     <Box sx={{ flexGrow: 1}}>
     <NavBar></NavBar>
-    <div>
-"
-
-
-
-
-
-
-
-
-
-
-
-"
-      </div>
-      <div>
-"
-
-
-
-
-
-
-
-
-
-
-
-"
-      </div>
+    <h1 style = {{paddingTop:"10px"}}></h1>
+      <NavBar></NavBar>
+      <h1 style = {{paddingTop:"10px"}}></h1>
           <List dense={dense} sx={{ width: '200%', maxWidth: 360, bgcolor: 'background.blue'}}>
             
               <ListItem
@@ -346,36 +253,9 @@ else if(numWorkouts.length === 4){
   return (
     <Box sx={{ flexGrow: 1}}>
     <NavBar></NavBar>
-    <div>
-"
-
-
-
-
-
-
-
-
-
-
-
-"
-      </div>
-      <div>
-"
-
-
-
-
-
-
-
-
-
-
-
-"
-      </div>
+    <h1 style = {{paddingTop:"10px"}}></h1>
+      <NavBar></NavBar>
+      <h1 style = {{paddingTop:"10px"}}></h1>
           <List dense={dense} sx={{ width: '200%', maxWidth: 360, bgcolor: 'background.blue'}}>
             
               <ListItem
@@ -437,36 +317,9 @@ else if(numWorkouts.length === 5){
   return (
     <Box sx={{ flexGrow: 1}}>
     <NavBar></NavBar>
-    <div>
-"
-
-
-
-
-
-
-
-
-
-
-
-"
-      </div>
-      <div>
-"
-
-
-
-
-
-
-
-
-
-
-
-"
-      </div>
+    <h1 style = {{paddingTop:"10px"}}></h1>
+      <NavBar></NavBar>
+      <h1 style = {{paddingTop:"10px"}}></h1>
           <List dense={dense} sx={{ width: '200%', maxWidth: 360, bgcolor: 'background.blue'}}>
             
               <ListItem
@@ -541,36 +394,9 @@ if(numWorkouts.length === 6){
   return (
     <Box sx={{ flexGrow: 1}}>
     <NavBar></NavBar>
-    <div>
-"
-
-
-
-
-
-
-
-
-
-
-
-"
-      </div>
-      <div>
-"
-
-
-
-
-
-
-
-
-
-
-
-"
-      </div>
+    <h1 style = {{paddingTop:"10px"}}></h1>
+      <NavBar></NavBar>
+      <h1 style = {{paddingTop:"10px"}}></h1>
           <List dense={dense} sx={{ width: '200%', maxWidth: 360, bgcolor: 'background.blue'}}>
             
               <ListItem
@@ -658,36 +484,9 @@ else if(numWorkouts.length === 7){
   return (
     <Box sx={{ flexGrow: 1}}>
     <NavBar></NavBar>
-    <div>
-"
-
-
-
-
-
-
-
-
-
-
-
-"
-      </div>
-      <div>
-"
-
-
-
-
-
-
-
-
-
-
-
-"
-      </div>
+    <h1 style = {{paddingTop:"10px"}}></h1>
+      <NavBar></NavBar>
+      <h1 style = {{paddingTop:"10px"}}></h1>
           <List dense={dense} sx={{ width: '200%', maxWidth: 360, bgcolor: 'background.blue'}}>
             
               <ListItem
@@ -787,36 +586,9 @@ else if(numWorkouts.length === 8){
   return (
     <Box sx={{ flexGrow: 1}}>
     <NavBar></NavBar>
-    <div>
-"
-
-
-
-
-
-
-
-
-
-
-
-"
-      </div>
-      <div>
-"
-
-
-
-
-
-
-
-
-
-
-
-"
-      </div>
+    <h1 style = {{paddingTop:"10px"}}></h1>
+      <NavBar></NavBar>
+      <h1 style = {{paddingTop:"10px"}}></h1>
           <List dense={dense} sx={{ width: '200%', maxWidth: 360, bgcolor: 'background.blue'}}>
             
               <ListItem
@@ -929,36 +701,9 @@ else if(numWorkouts.length === 9){
   return (
     <Box sx={{ flexGrow: 1}}>
     <NavBar></NavBar>
-    <div>
-"
-
-
-
-
-
-
-
-
-
-
-
-"
-      </div>
-      <div>
-"
-
-
-
-
-
-
-
-
-
-
-
-"
-      </div>
+    <h1 style = {{paddingTop:"10px"}}></h1>
+      <NavBar></NavBar>
+      <h1 style = {{paddingTop:"10px"}}></h1>
           <List dense={dense} sx={{ width: '200%', maxWidth: 360, bgcolor: 'background.blue'}}>
             
               <ListItem
@@ -1081,39 +826,13 @@ else if(numWorkouts.length === 9){
   );
 }
 else if(numWorkouts.length === 10){
+
   return (
     <Box sx={{ flexGrow: 1}}>
       <NavBar></NavBar>
-      <div>
-"
-
-
-
-
-
-
-
-
-
-
-
-"
-      </div>
-      <div>
-"
-
-
-
-
-
-
-
-
-
-
-
-"
-      </div>
+      <h1 style = {{paddingTop:"10px"}}></h1>
+      <NavBar></NavBar>
+      <h1 style = {{paddingTop:"10px"}}></h1>
             <List dense={dense} sx={{ width: '200%', maxWidth: 360, bgcolor: 'background.blue'}}>
               
                 <ListItem

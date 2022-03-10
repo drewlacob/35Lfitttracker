@@ -11,6 +11,7 @@ import {
 import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom'
 import HistoryIcon from "@mui/icons-material/History";
+import LogoutIcon from "@mui/icons-material/Logout";
 let name = sessionStorage.getItem("user_name");
 const axios = require('axios');
 
@@ -68,11 +69,14 @@ function Navbar() {
           {name}
         </Typography>
           <div>
-            <Link to="/workouts">
+            <Link to="/workouts" onClick={() => { window.current_workout = ""; window.open("http://localhost:3000/workouts","_self") }}>
               <AddIcon/>
             </Link>
-            <Link to="/history" onClick={() => { window.fromhist = 1; window.open("http://localhost:3000/history") }} >
+            <Link to="/history" onClick={() => { window.fromhist = 1; window.open("http://localhost:3000/history","_self") }} >
               <HistoryIcon/>
+            </Link>
+            <Link to="/login" onClick={() => { sessionStorage.clear(); window.open("http://localhost:3000/login", "_self")}} >
+              <LogoutIcon/>
             </Link>
           </div>
       </Toolbar>
