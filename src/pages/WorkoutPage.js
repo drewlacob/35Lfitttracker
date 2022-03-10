@@ -9,8 +9,10 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import constants from '../assets/constants.js'
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import { useNavigate } from 'react-router-dom'
 
 function WorkoutPage(props) {
+    const navigate = useNavigate();
     const { title, date, count, userID, cameFromHistory } = props;
     const axios = require('axios');
     
@@ -26,7 +28,7 @@ function WorkoutPage(props) {
     const [exerciseCount, setExerciseCount] = useState(0);
     const [workoutTitle, setWorkoutTitle] = useState(window.current_workout);
     const [stateUserID, setUserID] = useState(sessionStorage.getItem("user_id"));
-    const [stateDate, setDate] = useState(d.getMonth() + "\\" + d.getDate() + "\\" + d.getFullYear());
+    const [stateDate, setDate] = useState((d.getMonth()+1) + "\\" + (d.getDate()+1) + "\\" + d.getFullYear());
 
     //console.log("Date");
 
@@ -48,17 +50,21 @@ function WorkoutPage(props) {
       //cameFromHistory = true;
       if (window.fromHistory === 1) {
         load();
+      
       }
     }, []);
     
-
+    //was in get exercise card
+    /*            <IconButton>
+              <DeleteIcon onClick={() => handleDelete(exerciseCardObject.id)}/>
+            </IconButton>*/
     const getExerciseCard = exerciseCardObject => {
       console.log("getting exercise card");
         return (
             <div>
             <ExerciseCard {...exerciseCardObject} />
             <IconButton>
-              <DeleteIcon onClick={() => handleDelete(exerciseCardObject.id)}/>
+              <DeleteIcon id="delete" onClick={() => handleDelete(exerciseCardObject.id)}/>
             </IconButton>
             </div>
         );
@@ -70,6 +76,10 @@ function WorkoutPage(props) {
       console.log("userid" + userID);
       var date = window.current_date;
       var workoutName = workoutTitle;
+      console.log("LOADING: ");
+      console.log("userID: " + userID);
+      console.log("date: " + date);
+      console.log("workoutName: " + workoutName);
       var httpstring = 'http://localhost:8888/history?user=' + userID +
                       '&date=' + date + '&workname=' + workoutName;
       console.log(httpstring);
@@ -117,6 +127,7 @@ function WorkoutPage(props) {
         //console.log("Pushing data:" + data);
         exerciseArray.push(data);
         setExerciseArray(exerciseArray);
+        setExerciseCount(exerciseArray.length);
       }
       console.log(exerciseArray);
       console.log(exerciseArray.length);
@@ -135,7 +146,7 @@ function WorkoutPage(props) {
       var date = stateDate;
       var workoutName = workoutTitle;
       var clearhttp = "http://localhost:8888/clear?user=" + userID + "&date=" + date + "&workname=" + workoutName;
-
+      console.log("Clearhttp: " + clearhttp);
       console.log("userID");
       console.log(userID);
       console.log("date");
@@ -156,6 +167,8 @@ function WorkoutPage(props) {
            //todo implement saving to db
       //console.log(window.data); // window.data contains all the data about all the exercises
       for (var i = 0, l = exerciseArray.length; i < l; i++) {
+        console.log("Trying to save from window data: ");
+        console.log(window.data);
         var title = exerciseArray[i].title;
         var sets = window.data[i][1];
         var reps = window.data[i][2];
@@ -171,6 +184,7 @@ function WorkoutPage(props) {
         axios.get(httpstring)
         .then(function (response) {
         // handle success
+          navigate("/history");
           console.log(response)
         })
         .catch(function (error) {
@@ -178,12 +192,13 @@ function WorkoutPage(props) {
           console.log(error);
         })
         .then(function () {
+        navigate("/history");
         // always executed
         });
       }
  
       
-      alert(workoutTitle);
+      alert("Saved: " + workoutTitle);
         //todo implement saving to db
       // always executed
       });
@@ -206,10 +221,10 @@ function WorkoutPage(props) {
       for (let i = id; i < window.ids.length; i++) { // adjust the id #s of the elements after the one deleted
         window.ids[i] -= 1;
       }*/
-      for (let i = id; i < exerciseArray.length; i++) { // adjust the id #s of the elements after the one deleted
-        exerciseArray[i].id -= 1;
+      /*for (let i = id; i < exerciseArray.length; i++) { // adjust the id #s of the elements after the one deleted
+        exerciseArray[i].id -= 1;*/
         //console.log("adjusting exerciseArray " + i);   G
-      }
+      //}
       setExerciseArray(exerciseArray);
       //console.log("exerciseArray indexes after deletion");    G
       /*for (let i = 0; i < exerciseArray.length; i++) {
@@ -218,6 +233,12 @@ function WorkoutPage(props) {
       }*/
       //console.log("Window data pre deletion\n" + window.data);   G
       window.data.splice(id, 1);
+      console.log("Exercise array post deletion: " );
+      console.log(exerciseArray);
+      setExerciseCount(exerciseArray.length);
+      setExerciseArray(exerciseArray);
+      console.log("ExerciseCount post deletion: " + exerciseCount);
+      //setAnchorEl(null);
       //console.log("Window data post deletion\n" + window.data);   G
     };
 
@@ -232,6 +253,10 @@ function WorkoutPage(props) {
                     desc: result.description, imageUrl: result.imageUrl};
         exerciseArray.push(data);
         setExerciseArray(exerciseArray);
+        setExerciseCount(exerciseArray.length);
+        console.log("NEW EXERCISE ARRAY AFTER ADD: ");
+        console.log(exerciseArray);
+        console.log("Exericse Count AFTER ADD: " + exerciseCount);
         //alert(exerciseArray.length);
     };
 
