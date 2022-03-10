@@ -28,7 +28,7 @@ function WorkoutPage(props) {
     const [exerciseCount, setExerciseCount] = useState(0);
     const [workoutTitle, setWorkoutTitle] = useState(window.current_workout);
     const [stateUserID, setUserID] = useState(sessionStorage.getItem("user_id"));
-    const [stateDate, setDate] = useState((d.getMonth()+1) + "\\" + (d.getDate()+1) + "\\" + d.getFullYear());
+    const [stateDate, setDate] = useState((d.getMonth()+1) + "\\" + (d.getDate()) + "\\" + d.getFullYear());
 
     //console.log("Date");
 
@@ -49,6 +49,8 @@ function WorkoutPage(props) {
     useEffect(() => {
       //cameFromHistory = true;
       if (window.fromHistory === 1) {
+
+        setDate(window.current_date);
         load();
       
       }
@@ -192,12 +194,11 @@ function WorkoutPage(props) {
           console.log(error);
         })
         .then(function () {
+        window.fromhist = 1;
         navigate("/history");
         // always executed
         });
       }
- 
-      
       alert("Saved: " + workoutTitle);
         //todo implement saving to db
       // always executed
