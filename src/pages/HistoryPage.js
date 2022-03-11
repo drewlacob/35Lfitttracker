@@ -35,12 +35,6 @@ var yolo;
 export default function HistoryPage() {
 // Make a request for a user with a given ID
 window.fromHistory = 1;
-if(window.result.length === 0)
-{
-  return(
-    <div>No workouts yet! Please add a workout to view your history</div>
-  );
-}
 if(window.fromhist === 1){
   window.fromhist = 0;
     window.location.reload();
@@ -131,8 +125,13 @@ const [dense, setDense] = React.useState(false);
 const [secondary, setSecondary] = React.useState(true);
 console.log("numwork:");
 console.log(numWorkouts.length);
-
-if(numWorkouts.length === 1){
+if(window.result.length === 0)
+{
+  return(
+    <div>No workouts yet! Please add a workout to view your history</div>
+  );
+}
+else if(numWorkouts.length === 1){
   if(workoutText.length === 3 && workoutText[0].match("Error") && workoutText[1].match("\n")){
     return (
     
