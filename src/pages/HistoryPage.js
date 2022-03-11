@@ -20,6 +20,7 @@ import PlayCircleFilledWhiteIcon from '@mui/icons-material/PlayCircleFilledWhite
 import Button from '@mui/material/Button';
 import NavBar from '../components/NavBar.js'
 import { textAlign } from '@material-ui/system';
+import { left } from '@popperjs/core';
 const axios = require('axios');
 const webadd = "http://localhost:8888/info?user=2022"
 
@@ -34,6 +35,12 @@ var yolo;
 export default function HistoryPage() {
 // Make a request for a user with a given ID
 window.fromHistory = 1;
+if(window.result.length === 0)
+{
+  return(
+    <div>No workouts yet! Please add a workout to view your history</div>
+  );
+}
 if(window.fromhist === 1){
   window.fromhist = 0;
     window.location.reload();
