@@ -61,6 +61,9 @@ function WorkoutPage(props) {
               <DeleteIcon onClick={() => handleDelete(exerciseCardObject.id)}/>
             </IconButton>*/
     const getExerciseCard = exerciseCardObject => {
+      /*let cur_id = exerciseCardObject.id;
+      console.log("curid" + cur_id);
+      exerciseArray[cur_id].sets = window.data[cur_id][1];*/
       console.log("getting exercise card");
         return (
             <div>
@@ -73,6 +76,7 @@ function WorkoutPage(props) {
       };
       //handleDelete(exerciseCount-1)
     function load() {
+      window.cameFromDelete = 0;
       var userID = stateUserID;
       console.log(sessionStorage.getItem("user_id"));
       console.log("userid" + userID);
@@ -88,13 +92,11 @@ function WorkoutPage(props) {
       axios.get(httpstring)
       .then(function (response) {
       // handle success
-          // TODO: clean up this code, one of these methods should work (need to decide if we enter for loop if response is "error")
         if (response.data === "Error\n") {
           return;
         }
         console.log("Response: " + response.data + response.data.length);
         console.log(response.data.search("\n"));
-        // might be error with multiple exercises and the last exercise
         var exerciseData = [];
         console.log((response.data.match(/\n/g) || []).length);
         if (response.data.search("\n") !== -1) { // contains newlines
@@ -107,7 +109,6 @@ function WorkoutPage(props) {
         var exer = [];
         for (var i = 0; i < l; i++) {
           //setExerciseCount(exerciseCount + 1);
-          //console.log("coutn" + exerciseCount);
           if (exerciseData[i].search("Bench") != -1) {
             var temp_exer = exerciseData[i].split(' ');
             exer[0] = "Bench Press";
@@ -116,7 +117,7 @@ function WorkoutPage(props) {
             exer[3] = temp_exer[4];
           }
           else {
-            exer = exerciseData[i].split(' '); // what if no spaces??
+            exer = exerciseData[i].split(' '); 
           }
           console.log(exer[0] + exer[0].length);
           var result = exerciseInfo.find(obj => {
@@ -166,7 +167,6 @@ function WorkoutPage(props) {
         console.log(error);
       })
       .then(function () {
-           //todo implement saving to db
       //console.log(window.data); // window.data contains all the data about all the exercises
       for (var i = 0, l = exerciseArray.length; i < l; i++) {
         console.log("Trying to save from window data: ");
@@ -207,46 +207,65 @@ function WorkoutPage(props) {
     };
 
     function handleDelete(id) {
+      setExerciseCount(exerciseArray.length);
+      window.cameFromDelete = 1;
       console.log("deleting index " + id); //  G
-      console.log("size of exerciseArray pre deletion " + exerciseArray.length); // G
+      console.log("size of exerciseArray pre deletion " + exerciseArray.length);
       
-      //setExerciseCount(exerciseCount-1); 
-      //console.log("exerciseArray indexes and sets pre deletion");  G
+      
+      //console.log("exerciseArray indexes and sets pre deletion");  
       /*for (let i = 0; i < exerciseArray.length; i++) {
-        console.log("id: " + exerciseArray[i].id); //stored as character!   // for loop G
+        console.log("id: " + exerciseArray[i].id); //stored as character!  
         console.log("sets: " + exerciseArray[i].sets);
       }*/
-      exerciseArray.splice(id, 1);
-      console.log("size of exerciseArray post deletion " + exerciseArray.length); // G
-      /*window.ids.splice(id, 1);
-      for (let i = id; i < window.ids.length; i++) { // adjust the id #s of the elements after the one deleted
-        window.ids[i] -= 1;
-      }*/
-      /*for (let i = id; i < exerciseArray.length; i++) { // adjust the id #s of the elements after the one deleted
-        exerciseArray[i].id -= 1;*/
-        //console.log("adjusting exerciseArray " + i);   G
-      //}
-      setExerciseArray(exerciseArray);
-      //console.log("exerciseArray indexes after deletion");    G
-      /*for (let i = 0; i < exerciseArray.length; i++) {
-        console.log("id: " + exerciseArray[i].id); //stored as character!     // for loop G
-        console.log("sets: " + exerciseArray[i].sets);
-      }*/
-      //console.log("Window data pre deletion\n" + window.data);   G
       window.data.splice(id, 1);
+
+      exerciseArray.splice(id, 1);
+      console.log("size of exerciseArray post deletion " + exerciseArray.length); 
+
+      for (let i = id; i < exerciseArray.length; i++) { // adjust the id #s of the elements after the one deleted
+        exerciseArray[i].id -= 1;
+        //console.log("adjusting exerciseArray " + i);   G
+      }
+      for (let i = 0, l = exerciseArray.length; i < l; i++) {
+        var t_sets = window.data[i][1];
+        var t_reps = window.data[i][2];
+        var t_weight = window.data[i][3];
+
+        /*var t_title = exerciseArray[i].title;
+        var t_desc = exerciseArray[i].desc;   // these 3 were commented out
+        var t_imageUrl = exerciseArray[i].imageUrl;*/
+        exerciseArray[i].sets = t_sets;
+        exerciseArray[i].reps = t_reps;
+        exerciseArray[i].weight = t_weight;
+        //exerciseArray.splice(0, 1);
+        /*let data = {title: t_title, sets: t_sets, reps: t_reps, weight: t_weight, id: i, //exerciseCount,
+                    desc: t_desc, imageUrl: t_imageUrl};  // these 3 lines were commented out
+        exerciseArray.push(data);*/
+        //setExerciseArray(exerciseArray);
+        //setExerciseCount(exerciseArray.length);
+      }
+      
+
+      //setExerciseArray(exerciseArray);
+      //console.log("exerciseArray indexes after deletion");    
+      /*for (let i = 0; i < exerciseArray.length; i++) {
+        console.log("id: " + exerciseArray[i].id); //stored as character!     
+        console.log("sets: " + exerciseArray[i].sets);
+      }*/
+      
       console.log("Exercise array post deletion: " );
       console.log(exerciseArray);
-      setExerciseCount(exerciseArray.length);
-      setExerciseArray(exerciseArray);
+      
+      //setExerciseArray(exerciseArray);
       console.log("ExerciseCount post deletion: " + exerciseCount);
-      //setAnchorEl(null);
-      //console.log("Window data post deletion\n" + window.data);   G
+      setExerciseArray(exerciseArray);
+      setExerciseCount(exerciseArray.length);
     };
 
     function addExercise(exerciseType) {
+        window.cameFromDelete = 0;
         console.log(exerciseType + exerciseType.length);
-        //setExerciseCount(exerciseCount + 1);
-        //var key = exerciseCount-1;
         var result = exerciseInfo.find(obj => {
             return obj.title === exerciseType;
           })
@@ -257,6 +276,7 @@ function WorkoutPage(props) {
         setExerciseCount(exerciseArray.length);
         console.log("NEW EXERCISE ARRAY AFTER ADD: ");
         console.log(exerciseArray);
+        console.log(window.data);
         console.log("Exericse Count AFTER ADD: " + exerciseCount);
         //alert(exerciseArray.length);
     };
