@@ -6,6 +6,12 @@
 
 Make sure to run
 
+### `npm install`
+
+After you cloned the repository.
+
+Or run everything below:
+
 ### `npm install @material-ui/core`
 
 Install material-ui/core

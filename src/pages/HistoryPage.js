@@ -20,6 +20,7 @@ import PlayCircleFilledWhiteIcon from '@mui/icons-material/PlayCircleFilledWhite
 import Button from '@mui/material/Button';
 import NavBar from '../components/NavBar.js'
 import { textAlign } from '@material-ui/system';
+import { left } from '@popperjs/core';
 const axios = require('axios');
 const webadd = "http://localhost:8888/info?user=2022"
 
@@ -124,8 +125,13 @@ const [dense, setDense] = React.useState(false);
 const [secondary, setSecondary] = React.useState(true);
 console.log("numwork:");
 console.log(numWorkouts.length);
-
-if(numWorkouts.length === 1){
+if(window.result.length === 0)
+{
+  return(
+    <div>No workouts yet! Please add a workout to view your history</div>
+  );
+}
+else if(numWorkouts.length === 1){
   if(workoutText.length === 3 && workoutText[0].match("Error") && workoutText[1].match("\n")){
     return (
     

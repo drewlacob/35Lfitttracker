@@ -11,6 +11,7 @@ import {
 import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom'
 import HistoryIcon from "@mui/icons-material/History";
+import LogoutIcon from "@mui/icons-material/Logout";
 let name = sessionStorage.getItem("user_name");
 const axios = require('axios');
 
@@ -63,18 +64,26 @@ function Navbar() {
 
   return (
     <AppBar>
-      <Toolbar>
-        <Typography> 
+      <Toolbar style={{ background: '#5795DE' }}>
+        <Typography style={{fontFamily: "copperplate"}}> 
           {name}
         </Typography>
           <div>
             <Link to="/workouts" onClick={() => { window.current_workout = ""; window.open("http://localhost:3000/workouts","_self") }}>
-              <AddIcon/>
+              <AddIcon style={{ paddingRight: "15px", paddingLeft: "15px"}}/>
             </Link>
             <Link to="/history" onClick={() => { window.fromhist = 1; window.open("http://localhost:3000/history","_self") }} >
-              <HistoryIcon/>
+              <HistoryIcon style={{ paddingRight: "15px", paddingLeft: "15px"}}/>
+            </Link>
+            <Link style={{float: 'right'}} to="/login" align="right" onClick={() => { sessionStorage.clear(); window.open("http://localhost:3000/login", "_self")}} >
+              <LogoutIcon style={{ paddingRight: "15px", paddingLeft: "15px"}}/>
             </Link>
           </div>
+          {/* <View style={{ display:'flex',  flexDirection:"row", justifyContent:'center', alignItems:'center'}}>
+          <text style={{ display:'flex',  flexDirection:"row", justifyContent:'center', alignItems:'center'}}> 
+          FITTRACKER
+        </text>
+        </View> */}
       </Toolbar>
     </AppBar>
   );
@@ -97,7 +106,7 @@ export default Navbar;
   /*<AppBar className={classes.navbar}>
       <Toolbar>
         <Typography className={classes.name}> 
-          Name
+          
         </Typography>
           <div className={classes.navlinks}>
             <IconButton aria-label="app" onClick={()=>newWorkout()}>
